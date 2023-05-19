@@ -10,26 +10,33 @@ class ConvClassifier(nn.Module):
         self.features = nn.Sequential(
             nn.Conv1d(6, 16, kernel_size=3, stride=1, padding=1),
             nn.ReLU(inplace=True),
-            nn.MaxPool1d(2, stride=2),
-            nn.Conv1d(16, 32, kernel_size=3, stride=1, padding=1),
+            nn.Conv1d(16, 32, kernel_size=3, stride=2, padding=1),
             nn.ReLU(inplace=True),
             nn.MaxPool1d(2, stride=2),
-            nn.Conv1d(32, 64, kernel_size=3, stride=1, padding=1),
+            nn.Conv1d(32, 12, kernel_size=3, stride=1, padding=1),
             nn.ReLU(inplace=True),
-            nn.MaxPool1d(2, stride=2),
+            nn.MaxPool1d(2, stride=2)
         )
-
-        # Calculate the size of the final feature map after convolutional and pooling layers
-        feature_map_size = input_length // (2 * 2 * 2)
 
         # Define the classifier layers
         self.classifier = nn.Sequential(
-            nn.Linear(64 * feature_map_size, 128),
+            nn.Linear(562 * 12, 562*6),
             nn.ReLU(inplace=True),
-            nn.Linear(128, 64),
+            nn.Linear(562 * 6, 562*3),
             nn.ReLU(inplace=True),
-            nn.Linear(64, num_classes),
+            nn.Linear(562 * 3, 562),
+            nn.ReLU(inplace=True),
+            nn.Linear(562, 281),
+            nn.ReLU(inplace=True),
+            nn.Linear(281, num_classes)
         )
+        
+        # Initialize weights with He initialization
+        for m in self.modules():
+            if isinstance(m, nn.Conv1d):
+                nn.init.kaiming_normal_(m.weight, mode='fan_out', nonlinearity='relu')
+            elif isinstance(m, nn.Linear):
+                nn.init.kaiming_normal_(m.weight, mode='fan_in', nonlinearity='relu')
 
 
     def forward(self, x):

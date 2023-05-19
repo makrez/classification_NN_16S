@@ -1,0 +1,206 @@
+2023-05-19 22:12:17 INFO     Starting training with lr=0.01, n_epoch=10
+2023-05-19 22:18:40 INFO     Starting training with lr=0.01, n_epoch=10
+2023-05-19 22:19:59 INFO     Starting training with lr=0.01, n_epoch=10
+2023-05-19 22:22:45 INFO     Starting training with lr=0.01, n_epoch=10
+2023-05-19 22:30:23 INFO     Starting training with lr=0.01, n_epoch=10
+2023-05-19 22:31:47 INFO     Epoch: 1 	Training Loss: 31.517318 	Test Loss: 1.905277 	Epoch Time: 83.94s 	Total Time: 83.94s
+2023-05-19 22:31:47 INFO     Epoch: 2 	Training Loss: 1.934734 	Test Loss: 1.902488 	Epoch Time: 0.74s 	Total Time: 84.68s
+2023-05-19 22:31:48 INFO     Epoch: 3 	Training Loss: 1.929451 	Test Loss: 1.908792 	Epoch Time: 0.73s 	Total Time: 85.41s
+2023-05-19 22:31:49 INFO     Epoch: 4 	Training Loss: 1.928592 	Test Loss: 1.908300 	Epoch Time: 0.76s 	Total Time: 86.17s
+2023-05-19 22:31:49 INFO     Epoch: 5 	Training Loss: 1.922992 	Test Loss: 1.912378 	Epoch Time: 0.74s 	Total Time: 86.91s
+2023-05-19 22:31:50 INFO     Epoch: 6 	Training Loss: 1.927149 	Test Loss: 1.909745 	Epoch Time: 0.73s 	Total Time: 87.64s
+2023-05-19 22:31:51 INFO     Epoch: 7 	Training Loss: 1.927793 	Test Loss: 1.904916 	Epoch Time: 0.75s 	Total Time: 88.39s
+2023-05-19 22:31:52 INFO     Epoch: 8 	Training Loss: 1.924385 	Test Loss: 1.906462 	Epoch Time: 0.75s 	Total Time: 89.15s
+2023-05-19 22:31:52 INFO     Epoch: 9 	Training Loss: 1.924491 	Test Loss: 1.907863 	Epoch Time: 0.74s 	Total Time: 89.89s
+2023-05-19 22:31:53 INFO     Epoch: 10 	Training Loss: 1.924657 	Test Loss: 1.905019 	Epoch Time: 0.73s 	Total Time: 90.62s
+2023-05-19 22:48:30 INFO     Starting training with lr=0.01, n_epoch=10
+2023-05-19 22:48:32 INFO     Epoch: 1 	Training Loss: 35.205417 	Test Loss: 1.909223 	Epoch Time: 1.98s 	Total Time: 1.98s
+2023-05-19 22:48:33 INFO     Epoch: 2 	Training Loss: 1.930081 	Test Loss: 1.908233 	Epoch Time: 0.73s 	Total Time: 2.71s
+2023-05-19 22:48:34 INFO     Epoch: 3 	Training Loss: 1.933452 	Test Loss: 1.909123 	Epoch Time: 0.72s 	Total Time: 3.43s
+2023-05-19 22:48:34 INFO     Epoch: 4 	Training Loss: 1.928871 	Test Loss: 1.909312 	Epoch Time: 0.72s 	Total Time: 4.15s
+2023-05-19 22:48:35 INFO     Epoch: 5 	Training Loss: 1.929421 	Test Loss: 1.902686 	Epoch Time: 0.77s 	Total Time: 4.92s
+2023-05-19 22:48:36 INFO     Epoch: 6 	Training Loss: 1.924873 	Test Loss: 1.913335 	Epoch Time: 0.74s 	Total Time: 5.65s
+2023-05-19 22:48:37 INFO     Epoch: 7 	Training Loss: 1.927574 	Test Loss: 1.912656 	Epoch Time: 0.72s 	Total Time: 6.38s
+2023-05-19 22:48:37 INFO     Epoch: 8 	Training Loss: 1.924197 	Test Loss: 1.906098 	Epoch Time: 0.72s 	Total Time: 7.10s
+2023-05-19 22:48:38 INFO     Epoch: 9 	Training Loss: 1.926908 	Test Loss: 1.903897 	Epoch Time: 0.75s 	Total Time: 7.85s
+2023-05-19 22:48:39 INFO     Epoch: 10 	Training Loss: 1.923600 	Test Loss: 1.907436 	Epoch Time: 0.73s 	Total Time: 8.57s
+2023-05-19 22:50:01 INFO     Starting training with lr=0.01, n_epoch=10
+2023-05-19 22:50:03 INFO     Epoch: 1 	Training Loss: 32.770111 	Test Loss: 1.921878 	Epoch Time: 2.02s 	Total Time: 2.02s
+2023-05-19 22:50:04 INFO     Epoch: 2 	Training Loss: 1.930068 	Test Loss: 1.909366 	Epoch Time: 0.74s 	Total Time: 2.76s
+2023-05-19 22:50:05 INFO     Epoch: 3 	Training Loss: 1.927386 	Test Loss: 1.930851 	Epoch Time: 0.74s 	Total Time: 3.49s
+2023-05-19 22:50:06 INFO     Epoch: 4 	Training Loss: 1.929595 	Test Loss: 1.914209 	Epoch Time: 0.75s 	Total Time: 4.25s
+2023-05-19 22:50:06 INFO     Epoch: 5 	Training Loss: 1.926319 	Test Loss: 1.906511 	Epoch Time: 0.77s 	Total Time: 5.02s
+2023-05-19 22:50:07 INFO     Epoch: 6 	Training Loss: 1.927495 	Test Loss: 1.911780 	Epoch Time: 0.76s 	Total Time: 5.79s
+2023-05-19 22:50:08 INFO     Epoch: 7 	Training Loss: 1.925440 	Test Loss: 1.916157 	Epoch Time: 0.74s 	Total Time: 6.53s
+2023-05-19 22:50:09 INFO     Epoch: 8 	Training Loss: 1.925067 	Test Loss: 1.907230 	Epoch Time: 0.74s 	Total Time: 7.27s
+2023-05-19 22:50:09 INFO     Epoch: 9 	Training Loss: 1.923864 	Test Loss: 1.904983 	Epoch Time: 0.77s 	Total Time: 8.05s
+2023-05-19 22:50:10 INFO     Epoch: 10 	Training Loss: 1.923972 	Test Loss: 1.910380 	Epoch Time: 0.75s 	Total Time: 8.80s
+2023-05-19 22:50:11 INFO     Total training time: 9.48s
+2023-05-19 22:50:41 INFO     Starting training with lr=0.01, n_epoch=10
+2023-05-19 22:50:43 INFO     Epoch: 1 	Training Loss: 59.072192 	Test Loss: 1.908863 	Epoch Time: 1.97s 	Total Time: 1.97s
+2023-05-19 22:50:44 INFO     Epoch: 2 	Training Loss: 1.930833 	Test Loss: 1.904743 	Epoch Time: 0.73s 	Total Time: 2.71s
+2023-05-19 22:50:45 INFO     Epoch: 3 	Training Loss: 1.929028 	Test Loss: 1.920869 	Epoch Time: 0.73s 	Total Time: 3.43s
+2023-05-19 22:50:45 INFO     Epoch: 4 	Training Loss: 1.927538 	Test Loss: 1.917139 	Epoch Time: 0.73s 	Total Time: 4.16s
+2023-05-19 22:50:46 INFO     Epoch: 5 	Training Loss: 1.926883 	Test Loss: 1.906178 	Epoch Time: 0.74s 	Total Time: 4.90s
+2023-05-19 22:50:47 INFO     Epoch: 6 	Training Loss: 1.925268 	Test Loss: 1.914321 	Epoch Time: 0.77s 	Total Time: 5.66s
+2023-05-19 22:50:48 INFO     Epoch: 7 	Training Loss: 1.923927 	Test Loss: 1.905599 	Epoch Time: 0.75s 	Total Time: 6.42s
+2023-05-19 22:50:48 INFO     Epoch: 8 	Training Loss: 1.925112 	Test Loss: 1.910952 	Epoch Time: 0.75s 	Total Time: 7.16s
+2023-05-19 22:50:49 INFO     Epoch: 9 	Training Loss: 1.924403 	Test Loss: 1.910835 	Epoch Time: 0.73s 	Total Time: 7.90s
+2023-05-19 22:50:50 INFO     Epoch: 10 	Training Loss: 1.924539 	Test Loss: 1.905648 	Epoch Time: 0.77s 	Total Time: 8.67s
+2023-05-19 22:50:51 INFO     Total training time: 9.20s
+2023-05-19 22:51:21 INFO     Starting training with lr=0.01, n_epoch=10
+2023-05-19 22:51:23 INFO     Epoch: 1 	Training Loss: 57.773169 	Test Loss: 2.013691 	Epoch Time: 1.99s 	Total Time: 1.99s
+2023-05-19 22:51:24 INFO     Epoch: 2 	Training Loss: 1.942157 	Test Loss: 1.905632 	Epoch Time: 0.74s 	Total Time: 2.73s
+2023-05-19 22:51:25 INFO     Epoch: 3 	Training Loss: 1.926599 	Test Loss: 1.912551 	Epoch Time: 0.74s 	Total Time: 3.47s
+2023-05-19 22:51:25 INFO     Epoch: 4 	Training Loss: 1.925495 	Test Loss: 1.907556 	Epoch Time: 0.74s 	Total Time: 4.20s
+2023-05-19 22:51:26 INFO     Epoch: 5 	Training Loss: 1.922777 	Test Loss: 1.915400 	Epoch Time: 0.78s 	Total Time: 4.98s
+2023-05-19 22:51:27 INFO     Epoch: 6 	Training Loss: 1.930408 	Test Loss: 1.907136 	Epoch Time: 0.74s 	Total Time: 5.73s
+2023-05-19 22:51:28 INFO     Epoch: 7 	Training Loss: 1.925131 	Test Loss: 1.906777 	Epoch Time: 0.73s 	Total Time: 6.46s
+2023-05-19 22:51:28 INFO     Epoch: 8 	Training Loss: 1.922658 	Test Loss: 1.905357 	Epoch Time: 0.73s 	Total Time: 7.19s
+2023-05-19 22:51:29 INFO     Epoch: 9 	Training Loss: 1.922170 	Test Loss: 1.906643 	Epoch Time: 0.74s 	Total Time: 7.93s
+2023-05-19 22:51:30 INFO     Epoch: 10 	Training Loss: 1.922973 	Test Loss: 1.905869 	Epoch Time: 0.75s 	Total Time: 8.67s
+2023-05-19 22:51:30 INFO     Total training time: 9.19s
+2023-05-19 23:00:30 INFO     Starting training with lr=0.01, n_epoch=10
+2023-05-19 23:00:32 INFO     Epoch: 1 	Training Loss: 14.132890 	Test Loss: 1.929690 	Epoch Time: 1.93s 	Total Time: 1.93s
+2023-05-19 23:00:33 INFO     Epoch: 2 	Training Loss: 1.932048 	Test Loss: 1.908469 	Epoch Time: 0.76s 	Total Time: 2.69s
+2023-05-19 23:00:34 INFO     Epoch: 3 	Training Loss: 1.925806 	Test Loss: 1.903310 	Epoch Time: 0.75s 	Total Time: 3.44s
+2023-05-19 23:00:35 INFO     Epoch: 4 	Training Loss: 1.929353 	Test Loss: 1.913878 	Epoch Time: 0.73s 	Total Time: 4.17s
+2023-05-19 23:00:35 INFO     Epoch: 5 	Training Loss: 1.924280 	Test Loss: 1.904135 	Epoch Time: 0.73s 	Total Time: 4.90s
+2023-05-19 23:00:36 INFO     Epoch: 6 	Training Loss: 1.923488 	Test Loss: 1.911449 	Epoch Time: 0.73s 	Total Time: 5.63s
+2023-05-19 23:00:37 INFO     Epoch: 7 	Training Loss: 1.927537 	Test Loss: 1.901714 	Epoch Time: 0.76s 	Total Time: 6.39s
+2023-05-19 23:00:38 INFO     Epoch: 8 	Training Loss: 1.923551 	Test Loss: 1.908422 	Epoch Time: 0.75s 	Total Time: 7.14s
+2023-05-19 23:00:38 INFO     Epoch: 9 	Training Loss: 1.923540 	Test Loss: 1.913251 	Epoch Time: 0.74s 	Total Time: 7.87s
+2023-05-19 23:00:39 INFO     Epoch: 10 	Training Loss: 1.924468 	Test Loss: 1.912392 	Epoch Time: 0.75s 	Total Time: 8.62s
+2023-05-19 23:00:41 INFO     Total training time: 10.25s
+2023-05-19 23:15:30 INFO     Starting training with lr=0.01, n_epoch=10
+2023-05-19 23:17:10 INFO     Epoch: 1 	Training Loss: 58.795155 	Test Loss: 1.915321 	Epoch Time: 99.99s 	Total Time: 99.99s
+2023-05-19 23:17:10 INFO     Epoch: 2 	Training Loss: 1.931495 	Test Loss: 1.906241 	Epoch Time: 0.74s 	Total Time: 100.72s
+2023-05-19 23:17:11 INFO     Epoch: 3 	Training Loss: 1.929499 	Test Loss: 1.918982 	Epoch Time: 0.75s 	Total Time: 101.47s
+2023-05-19 23:17:12 INFO     Epoch: 4 	Training Loss: 1.929621 	Test Loss: 1.916166 	Epoch Time: 0.75s 	Total Time: 102.22s
+2023-05-19 23:17:12 INFO     Epoch: 5 	Training Loss: 1.927623 	Test Loss: 1.906153 	Epoch Time: 0.73s 	Total Time: 102.95s
+2023-05-19 23:17:13 INFO     Epoch: 6 	Training Loss: 1.926793 	Test Loss: 1.906473 	Epoch Time: 0.73s 	Total Time: 103.69s
+2023-05-19 23:17:14 INFO     Epoch: 7 	Training Loss: 1.922925 	Test Loss: 1.908163 	Epoch Time: 0.73s 	Total Time: 104.42s
+2023-05-19 23:17:15 INFO     Epoch: 8 	Training Loss: 1.923164 	Test Loss: 1.909751 	Epoch Time: 0.74s 	Total Time: 105.16s
+2023-05-19 23:17:15 INFO     Epoch: 9 	Training Loss: 1.924662 	Test Loss: 1.905576 	Epoch Time: 0.74s 	Total Time: 105.90s
+2023-05-19 23:17:16 INFO     Epoch: 10 	Training Loss: 1.923369 	Test Loss: 1.906684 	Epoch Time: 0.74s 	Total Time: 106.64s
+2023-05-19 23:17:17 INFO     Total training time: 107.45s
+2023-05-19 23:17:21 INFO     lr=0.01, n_epoch=10, train_loss=1.9233686735516502, test_loss=1.9066842803483681
+2023-05-19 23:17:21 INFO     Starting training with lr=0.01, n_epoch=50
+2023-05-19 23:17:22 INFO     Epoch: 1 	Training Loss: 17.812182 	Test Loss: 1.902672 	Epoch Time: 0.75s 	Total Time: 0.75s
+2023-05-19 23:17:23 INFO     Epoch: 2 	Training Loss: 1.931767 	Test Loss: 1.908616 	Epoch Time: 0.74s 	Total Time: 1.49s
+2023-05-19 23:17:23 INFO     Epoch: 3 	Training Loss: 1.928544 	Test Loss: 1.907783 	Epoch Time: 0.75s 	Total Time: 2.24s
+2023-05-19 23:17:24 INFO     Epoch: 4 	Training Loss: 1.927944 	Test Loss: 1.916790 	Epoch Time: 0.74s 	Total Time: 2.98s
+2023-05-19 23:17:25 INFO     Epoch: 5 	Training Loss: 1.927426 	Test Loss: 1.912314 	Epoch Time: 0.74s 	Total Time: 3.72s
+2023-05-19 23:17:26 INFO     Epoch: 6 	Training Loss: 1.926961 	Test Loss: 1.906502 	Epoch Time: 0.75s 	Total Time: 4.47s
+2023-05-19 23:17:26 INFO     Epoch: 7 	Training Loss: 1.925268 	Test Loss: 1.907591 	Epoch Time: 0.74s 	Total Time: 5.21s
+2023-05-19 23:17:27 INFO     Epoch: 8 	Training Loss: 1.928190 	Test Loss: 1.911202 	Epoch Time: 0.75s 	Total Time: 5.96s
+2023-05-19 23:17:28 INFO     Epoch: 9 	Training Loss: 1.926343 	Test Loss: 1.906979 	Epoch Time: 0.74s 	Total Time: 6.70s
+2023-05-19 23:17:29 INFO     Epoch: 10 	Training Loss: 1.923669 	Test Loss: 1.904804 	Epoch Time: 0.74s 	Total Time: 7.44s
+2023-05-19 23:17:29 INFO     Epoch: 11 	Training Loss: 1.924026 	Test Loss: 1.908275 	Epoch Time: 0.74s 	Total Time: 8.18s
+2023-05-19 23:17:30 INFO     Epoch: 12 	Training Loss: 1.923355 	Test Loss: 1.906325 	Epoch Time: 0.74s 	Total Time: 8.92s
+2023-05-19 23:17:31 INFO     Epoch: 13 	Training Loss: 1.923424 	Test Loss: 1.913147 	Epoch Time: 0.74s 	Total Time: 9.66s
+2023-05-19 23:17:32 INFO     Epoch: 14 	Training Loss: 1.922400 	Test Loss: 1.905505 	Epoch Time: 0.74s 	Total Time: 10.40s
+2023-05-19 23:17:32 INFO     Epoch: 15 	Training Loss: 1.922445 	Test Loss: 1.902679 	Epoch Time: 0.75s 	Total Time: 11.15s
+2023-05-19 23:17:33 INFO     Epoch: 16 	Training Loss: 1.923240 	Test Loss: 1.906206 	Epoch Time: 0.75s 	Total Time: 11.90s
+2023-05-19 23:17:34 INFO     Epoch: 17 	Training Loss: 1.923991 	Test Loss: 1.907302 	Epoch Time: 0.74s 	Total Time: 12.63s
+2023-05-19 23:17:35 INFO     Epoch: 18 	Training Loss: 1.923075 	Test Loss: 1.904229 	Epoch Time: 0.73s 	Total Time: 13.37s
+2023-05-19 23:17:35 INFO     Epoch: 19 	Training Loss: 1.922839 	Test Loss: 1.906497 	Epoch Time: 0.74s 	Total Time: 14.11s
+2023-05-19 23:17:36 INFO     Epoch: 20 	Training Loss: 1.922772 	Test Loss: 1.904500 	Epoch Time: 0.76s 	Total Time: 14.87s
+2023-05-19 23:17:37 INFO     Epoch: 21 	Training Loss: 1.922187 	Test Loss: 1.903883 	Epoch Time: 0.73s 	Total Time: 15.60s
+2023-05-19 23:17:38 INFO     Epoch: 22 	Training Loss: 1.923675 	Test Loss: 1.904499 	Epoch Time: 0.78s 	Total Time: 16.38s
+2023-05-19 23:17:38 INFO     Epoch: 23 	Training Loss: 1.924213 	Test Loss: 1.913696 	Epoch Time: 0.74s 	Total Time: 17.12s
+2023-05-19 23:17:39 INFO     Epoch: 24 	Training Loss: 1.923381 	Test Loss: 1.906888 	Epoch Time: 0.73s 	Total Time: 17.85s
+2023-05-19 23:17:40 INFO     Epoch: 25 	Training Loss: 1.923047 	Test Loss: 1.903335 	Epoch Time: 0.73s 	Total Time: 18.58s
+2023-05-19 23:17:41 INFO     Epoch: 26 	Training Loss: 1.923041 	Test Loss: 1.905657 	Epoch Time: 0.77s 	Total Time: 19.35s
+2023-05-19 23:17:41 INFO     Epoch: 27 	Training Loss: 1.922641 	Test Loss: 1.903782 	Epoch Time: 0.78s 	Total Time: 20.12s
+2023-05-19 23:17:42 INFO     Epoch: 28 	Training Loss: 1.922350 	Test Loss: 1.907149 	Epoch Time: 0.75s 	Total Time: 20.87s
+2023-05-19 23:17:43 INFO     Epoch: 29 	Training Loss: 1.922297 	Test Loss: 1.906531 	Epoch Time: 0.76s 	Total Time: 21.63s
+2023-05-19 23:17:44 INFO     Epoch: 30 	Training Loss: 1.922444 	Test Loss: 1.903400 	Epoch Time: 0.74s 	Total Time: 22.38s
+2023-05-19 23:17:44 INFO     Epoch: 31 	Training Loss: 1.921577 	Test Loss: 1.905142 	Epoch Time: 0.75s 	Total Time: 23.12s
+2023-05-19 23:17:45 INFO     Epoch: 32 	Training Loss: 1.921311 	Test Loss: 1.905392 	Epoch Time: 0.75s 	Total Time: 23.87s
+2023-05-19 23:17:46 INFO     Epoch: 33 	Training Loss: 1.921123 	Test Loss: 1.905044 	Epoch Time: 0.74s 	Total Time: 24.61s
+2023-05-19 23:17:47 INFO     Epoch: 34 	Training Loss: 1.923038 	Test Loss: 1.905268 	Epoch Time: 0.75s 	Total Time: 25.36s
+2023-05-19 23:17:47 INFO     Epoch: 35 	Training Loss: 1.921833 	Test Loss: 1.905405 	Epoch Time: 0.74s 	Total Time: 26.10s
+2023-05-19 23:17:48 INFO     Epoch: 36 	Training Loss: 1.922052 	Test Loss: 1.905695 	Epoch Time: 0.74s 	Total Time: 26.84s
+2023-05-19 23:17:49 INFO     Epoch: 37 	Training Loss: 1.922638 	Test Loss: 1.905506 	Epoch Time: 0.74s 	Total Time: 27.59s
+2023-05-19 23:17:50 INFO     Epoch: 38 	Training Loss: 1.921837 	Test Loss: 1.905582 	Epoch Time: 0.74s 	Total Time: 28.32s
+2023-05-19 23:17:50 INFO     Epoch: 39 	Training Loss: 1.922844 	Test Loss: 1.904212 	Epoch Time: 0.75s 	Total Time: 29.07s
+2023-05-19 23:17:51 INFO     Epoch: 40 	Training Loss: 1.921706 	Test Loss: 1.904750 	Epoch Time: 0.74s 	Total Time: 29.81s
+2023-05-19 23:17:52 INFO     Epoch: 41 	Training Loss: 1.922246 	Test Loss: 1.905558 	Epoch Time: 0.73s 	Total Time: 30.54s
+2023-05-19 23:17:53 INFO     Epoch: 42 	Training Loss: 1.922074 	Test Loss: 1.903662 	Epoch Time: 0.74s 	Total Time: 31.28s
+2023-05-19 23:17:53 INFO     Epoch: 43 	Training Loss: 1.921488 	Test Loss: 1.907919 	Epoch Time: 0.74s 	Total Time: 32.02s
+2023-05-19 23:17:54 INFO     Epoch: 44 	Training Loss: 1.924371 	Test Loss: 1.906469 	Epoch Time: 0.74s 	Total Time: 32.76s
+2023-05-19 23:17:55 INFO     Epoch: 45 	Training Loss: 1.922814 	Test Loss: 1.905788 	Epoch Time: 0.74s 	Total Time: 33.49s
+2023-05-19 23:17:55 INFO     Epoch: 46 	Training Loss: 1.921838 	Test Loss: 1.905441 	Epoch Time: 0.74s 	Total Time: 34.23s
+2023-05-19 23:17:56 INFO     Epoch: 47 	Training Loss: 1.922291 	Test Loss: 1.904215 	Epoch Time: 0.73s 	Total Time: 34.96s
+2023-05-19 23:17:57 INFO     Epoch: 48 	Training Loss: 1.921341 	Test Loss: 1.904581 	Epoch Time: 0.73s 	Total Time: 35.70s
+2023-05-19 23:17:58 INFO     Epoch: 49 	Training Loss: 1.922325 	Test Loss: 1.903484 	Epoch Time: 0.74s 	Total Time: 36.43s
+2023-05-19 23:17:58 INFO     Epoch: 50 	Training Loss: 1.923021 	Test Loss: 1.905094 	Epoch Time: 0.73s 	Total Time: 37.17s
+2023-05-19 23:17:59 INFO     Total training time: 37.75s
+2023-05-19 23:17:59 INFO     lr=0.01, n_epoch=50, train_loss=1.9230209952309019, test_loss=1.905094444525106
+2023-05-19 23:18:00 INFO     Starting training with lr=0.0001, n_epoch=10
+2023-05-19 23:18:01 INFO     Epoch: 1 	Training Loss: 1.479977 	Test Loss: 1.344759 	Epoch Time: 0.75s 	Total Time: 0.75s
+2023-05-19 23:18:01 INFO     Epoch: 2 	Training Loss: 1.109505 	Test Loss: 0.974071 	Epoch Time: 0.76s 	Total Time: 1.51s
+2023-05-19 23:18:02 INFO     Epoch: 3 	Training Loss: 0.818099 	Test Loss: 0.661404 	Epoch Time: 0.75s 	Total Time: 2.25s
+2023-05-19 23:18:03 INFO     Epoch: 4 	Training Loss: 0.693567 	Test Loss: 0.686889 	Epoch Time: 0.74s 	Total Time: 2.99s
+2023-05-19 23:18:03 INFO     Epoch: 5 	Training Loss: 0.654610 	Test Loss: 0.647196 	Epoch Time: 0.74s 	Total Time: 3.73s
+2023-05-19 23:18:04 INFO     Epoch: 6 	Training Loss: 0.621930 	Test Loss: 0.644520 	Epoch Time: 0.74s 	Total Time: 4.47s
+2023-05-19 23:18:05 INFO     Epoch: 7 	Training Loss: 0.625713 	Test Loss: 0.562840 	Epoch Time: 0.74s 	Total Time: 5.21s
+2023-05-19 23:18:06 INFO     Epoch: 8 	Training Loss: 0.594162 	Test Loss: 0.617481 	Epoch Time: 0.75s 	Total Time: 5.96s
+2023-05-19 23:18:06 INFO     Epoch: 9 	Training Loss: 0.617026 	Test Loss: 0.611714 	Epoch Time: 0.76s 	Total Time: 6.72s
+2023-05-19 23:18:07 INFO     Epoch: 10 	Training Loss: 0.540979 	Test Loss: 0.501750 	Epoch Time: 0.74s 	Total Time: 7.46s
+2023-05-19 23:18:09 INFO     Total training time: 9.59s
+2023-05-19 23:18:10 INFO     lr=0.0001, n_epoch=10, train_loss=0.5409790195737566, test_loss=0.5017501752639452
+2023-05-19 23:18:10 INFO     Starting training with lr=0.0001, n_epoch=50
+2023-05-19 23:18:11 INFO     Epoch: 1 	Training Loss: 1.340637 	Test Loss: 1.037105 	Epoch Time: 0.74s 	Total Time: 0.74s
+2023-05-19 23:18:12 INFO     Epoch: 2 	Training Loss: 0.917910 	Test Loss: 0.780824 	Epoch Time: 0.75s 	Total Time: 1.49s
+2023-05-19 23:18:12 INFO     Epoch: 3 	Training Loss: 0.717678 	Test Loss: 0.786143 	Epoch Time: 0.76s 	Total Time: 2.26s
+2023-05-19 23:18:13 INFO     Epoch: 4 	Training Loss: 0.643684 	Test Loss: 0.611390 	Epoch Time: 0.77s 	Total Time: 3.03s
+2023-05-19 23:18:14 INFO     Epoch: 5 	Training Loss: 0.609530 	Test Loss: 0.594143 	Epoch Time: 0.77s 	Total Time: 3.79s
+2023-05-19 23:18:15 INFO     Epoch: 6 	Training Loss: 0.593933 	Test Loss: 0.634365 	Epoch Time: 0.75s 	Total Time: 4.54s
+2023-05-19 23:18:15 INFO     Epoch: 7 	Training Loss: 0.571864 	Test Loss: 0.578200 	Epoch Time: 0.74s 	Total Time: 5.28s
+2023-05-19 23:18:16 INFO     Epoch: 8 	Training Loss: 0.533531 	Test Loss: 0.496773 	Epoch Time: 0.74s 	Total Time: 6.02s
+2023-05-19 23:18:17 INFO     Epoch: 9 	Training Loss: 0.532079 	Test Loss: 0.539285 	Epoch Time: 0.73s 	Total Time: 6.76s
+2023-05-19 23:18:18 INFO     Epoch: 10 	Training Loss: 0.534699 	Test Loss: 0.490906 	Epoch Time: 0.74s 	Total Time: 7.50s
+2023-05-19 23:18:18 INFO     Epoch: 11 	Training Loss: 0.478086 	Test Loss: 0.462588 	Epoch Time: 0.74s 	Total Time: 8.24s
+2023-05-19 23:18:19 INFO     Epoch: 12 	Training Loss: 0.484979 	Test Loss: 0.530442 	Epoch Time: 0.76s 	Total Time: 9.00s
+2023-05-19 23:18:20 INFO     Epoch: 13 	Training Loss: 0.494609 	Test Loss: 0.501990 	Epoch Time: 0.74s 	Total Time: 9.74s
+2023-05-19 23:18:21 INFO     Epoch: 14 	Training Loss: 0.471554 	Test Loss: 0.466934 	Epoch Time: 0.74s 	Total Time: 10.48s
+2023-05-19 23:18:21 INFO     Epoch: 15 	Training Loss: 0.463606 	Test Loss: 0.546340 	Epoch Time: 0.74s 	Total Time: 11.22s
+2023-05-19 23:18:22 INFO     Epoch: 16 	Training Loss: 0.448556 	Test Loss: 0.441443 	Epoch Time: 0.74s 	Total Time: 11.96s
+2023-05-19 23:18:23 INFO     Epoch: 17 	Training Loss: 0.449684 	Test Loss: 0.483861 	Epoch Time: 0.74s 	Total Time: 12.70s
+2023-05-19 23:18:24 INFO     Epoch: 18 	Training Loss: 0.452098 	Test Loss: 0.467262 	Epoch Time: 0.76s 	Total Time: 13.46s
+2023-05-19 23:18:24 INFO     Epoch: 19 	Training Loss: 0.441905 	Test Loss: 0.512535 	Epoch Time: 0.74s 	Total Time: 14.20s
+2023-05-19 23:18:25 INFO     Epoch: 20 	Training Loss: 0.442039 	Test Loss: 0.430926 	Epoch Time: 0.74s 	Total Time: 14.94s
+2023-05-19 23:18:26 INFO     Epoch: 21 	Training Loss: 0.436270 	Test Loss: 0.553787 	Epoch Time: 0.75s 	Total Time: 15.69s
+2023-05-19 23:18:27 INFO     Epoch: 22 	Training Loss: 0.463733 	Test Loss: 0.442723 	Epoch Time: 0.74s 	Total Time: 16.43s
+2023-05-19 23:18:27 INFO     Epoch: 23 	Training Loss: 0.441591 	Test Loss: 0.449391 	Epoch Time: 0.74s 	Total Time: 17.17s
+2023-05-19 23:18:28 INFO     Epoch: 24 	Training Loss: 0.417553 	Test Loss: 0.463991 	Epoch Time: 0.75s 	Total Time: 17.92s
+2023-05-19 23:18:29 INFO     Epoch: 25 	Training Loss: 0.425199 	Test Loss: 0.440040 	Epoch Time: 0.74s 	Total Time: 18.66s
+2023-05-19 23:18:30 INFO     Epoch: 26 	Training Loss: 0.428676 	Test Loss: 0.431971 	Epoch Time: 0.73s 	Total Time: 19.39s
+2023-05-19 23:18:30 INFO     Epoch: 27 	Training Loss: 0.434633 	Test Loss: 0.453827 	Epoch Time: 0.73s 	Total Time: 20.13s
+2023-05-19 23:18:31 INFO     Epoch: 28 	Training Loss: 0.419890 	Test Loss: 0.428196 	Epoch Time: 0.73s 	Total Time: 20.86s
+2023-05-19 23:18:32 INFO     Epoch: 29 	Training Loss: 0.411078 	Test Loss: 0.453030 	Epoch Time: 0.75s 	Total Time: 21.61s
+2023-05-19 23:18:33 INFO     Epoch: 30 	Training Loss: 0.409385 	Test Loss: 0.421025 	Epoch Time: 0.74s 	Total Time: 22.35s
+2023-05-19 23:18:33 INFO     Epoch: 31 	Training Loss: 0.412439 	Test Loss: 0.513750 	Epoch Time: 0.74s 	Total Time: 23.09s
+2023-05-19 23:18:34 INFO     Epoch: 32 	Training Loss: 0.426153 	Test Loss: 0.443658 	Epoch Time: 0.74s 	Total Time: 23.83s
+2023-05-19 23:18:35 INFO     Epoch: 33 	Training Loss: 0.421447 	Test Loss: 0.422134 	Epoch Time: 0.74s 	Total Time: 24.57s
+2023-05-19 23:18:36 INFO     Epoch: 34 	Training Loss: 0.401263 	Test Loss: 0.423066 	Epoch Time: 0.76s 	Total Time: 25.32s
+2023-05-19 23:18:36 INFO     Epoch: 35 	Training Loss: 0.394637 	Test Loss: 0.422920 	Epoch Time: 0.75s 	Total Time: 26.07s
+2023-05-19 23:18:37 INFO     Epoch: 36 	Training Loss: 0.391913 	Test Loss: 0.467547 	Epoch Time: 0.74s 	Total Time: 26.81s
+2023-05-19 23:18:38 INFO     Epoch: 37 	Training Loss: 0.421426 	Test Loss: 0.530145 	Epoch Time: 0.74s 	Total Time: 27.55s
+2023-05-19 23:18:38 INFO     Epoch: 38 	Training Loss: 0.412224 	Test Loss: 0.432866 	Epoch Time: 0.74s 	Total Time: 28.29s
+2023-05-19 23:18:39 INFO     Epoch: 39 	Training Loss: 0.386226 	Test Loss: 0.480757 	Epoch Time: 0.74s 	Total Time: 29.03s
+2023-05-19 23:18:40 INFO     Epoch: 40 	Training Loss: 0.400353 	Test Loss: 0.435473 	Epoch Time: 0.74s 	Total Time: 29.77s
+2023-05-19 23:18:41 INFO     Epoch: 41 	Training Loss: 0.409626 	Test Loss: 0.424157 	Epoch Time: 0.74s 	Total Time: 30.51s
+2023-05-19 23:18:41 INFO     Epoch: 42 	Training Loss: 0.382067 	Test Loss: 0.458103 	Epoch Time: 0.75s 	Total Time: 31.26s
+2023-05-19 23:18:42 INFO     Epoch: 43 	Training Loss: 0.385379 	Test Loss: 0.463161 	Epoch Time: 0.74s 	Total Time: 32.00s
+2023-05-19 23:18:43 INFO     Epoch: 44 	Training Loss: 0.386737 	Test Loss: 0.444666 	Epoch Time: 0.74s 	Total Time: 32.74s
+2023-05-19 23:18:44 INFO     Epoch: 45 	Training Loss: 0.391484 	Test Loss: 0.422478 	Epoch Time: 0.74s 	Total Time: 33.48s
+2023-05-19 23:18:44 INFO     Epoch: 46 	Training Loss: 0.387387 	Test Loss: 0.463647 	Epoch Time: 0.74s 	Total Time: 34.22s
+2023-05-19 23:18:45 INFO     Epoch: 47 	Training Loss: 0.384399 	Test Loss: 0.464266 	Epoch Time: 0.74s 	Total Time: 34.96s
+2023-05-19 23:18:46 INFO     Epoch: 48 	Training Loss: 0.386075 	Test Loss: 0.526747 	Epoch Time: 0.74s 	Total Time: 35.69s
+2023-05-19 23:18:47 INFO     Epoch: 49 	Training Loss: 0.393770 	Test Loss: 0.425721 	Epoch Time: 0.76s 	Total Time: 36.46s
+2023-05-19 23:18:47 INFO     Epoch: 50 	Training Loss: 0.372551 	Test Loss: 0.414626 	Epoch Time: 0.76s 	Total Time: 37.22s
+2023-05-19 23:18:48 INFO     Total training time: 38.29s
+2023-05-19 23:18:49 INFO     lr=0.0001, n_epoch=50, train_loss=0.37255071691104347, test_loss=0.4146261798791559

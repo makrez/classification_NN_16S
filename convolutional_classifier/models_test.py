@@ -46,24 +46,25 @@ import torch.nn as nn
 
 conv_layer1 = nn.Conv1d(6, 16, kernel_size=3, stride=1, padding=1)
 relu_activation1 = nn.ReLU(inplace=True)
-pool1 = nn.MaxPool1d(2, stride=2)
-conv_layer2 = nn.Conv1d(16, 32, kernel_size=3, stride=3, padding=1)
+conv_layer2 = nn.Conv1d(16, 32, kernel_size=3, stride=2, padding=1)
 relu_activation2 = nn.ReLU(inplace=True)
 pool2 = nn.MaxPool1d(2, stride=2)
-conv_layer3 = nn.Conv1d(32, 64, kernel_size=3, stride=1, padding=1)
+conv_layer3 = nn.Conv1d(32, 12, kernel_size=3, stride=1, padding=1)
 relu_activation3 = nn.ReLU(inplace=True)
 pool3 = nn.MaxPool1d(2, stride=2)
 
+input_length = 4500
 dummy_input = torch.randn(1, 6, 4500)  # Example input shape: (batch_size, channels, input_length)
+print(dummy_input)
+feature_map_size = input_length // (2 * 2)
+print(f"feature_map size: {feature_map_size}")
+
 
 output = conv_layer1(dummy_input)
 print("Output shape after conv_layer1:", output.shape)
 
 output = relu_activation1(output)
 print("Output shape after relu_activation1:", output.shape)
-
-output = pool1(output)
-print("Output shape after pool1:", output.shape)
 
 output = conv_layer2(output)
 print("Output shape after conv_layer2:", output.shape)
