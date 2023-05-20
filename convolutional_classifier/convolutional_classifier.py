@@ -62,8 +62,9 @@ criterion = nn.CrossEntropyLoss()
 # Define the hyperparameters
 param_grid = {
     'lr': [0.01,0.001, 0.0001, 0.00001],
-    'n_epoch': [100, 500, 1000]
+    'n_epoch': [100, 500, 1000, 2000]
 }
+
 grid = ParameterGrid(param_grid)
 
 # To store results
