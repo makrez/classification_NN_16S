@@ -1,12 +1,11 @@
 import sequence_utils
 from sequence_utils import hot_dna
 
-
-sequence="ATGCN--YATG"
+sequence="----ATGCN--YATG----"
 print(sequence)
 
+#my_changed_sequence = hot_dna._preprocess_sequence(sequence)
 my_hot_dna = hot_dna(sequence)
-
 preprocessed_sequence = my_hot_dna._preprocess_sequence(sequence)
 
 print(preprocessed_sequence)

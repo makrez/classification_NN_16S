@@ -40,7 +40,15 @@ class ConvClassifier(nn.Module):
 
 
     def forward(self, x):
-        x = self.features(x)
-        x = x.view(x.size(0), -1)
-        x = self.classifier(x)
-        return x
+        # The data is in the first 5 channels and the mask is in the 6th channel
+        data = x[:, :5, :]
+        mask = x[:, 5, :]
+
+        # Multiply data by mask (this sets the masked values to zero)
+        data = data * mask.unsqueeze(1)  # we need to add an extra dimension to mask for broadcasting to work
+
+        data = self.features(data)
+
+        data = data.view(data.size(0), -1)
+        data = self.classifier(data)
+        return data

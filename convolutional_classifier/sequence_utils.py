@@ -4,6 +4,7 @@ import numpy as np
 from collections import Counter
 import torch
 from torch.utils.data import Dataset
+import re
 
 
 def summarize_msa(file_path, num_lines_to_display=5):
@@ -50,6 +51,8 @@ class hot_dna:
                 new_sequence += 'N'
             else:
                 new_sequence += base
+        # replace sequences of four or more '-' characters with 'N' characters
+        new_sequence = re.sub('(-{4,})', lambda m: 'N' * len(m.group(1)), new_sequence)
         return new_sequence
 
     def _onehot_encode(self, sequence):
