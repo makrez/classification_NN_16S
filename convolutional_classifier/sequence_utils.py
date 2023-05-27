@@ -37,14 +37,15 @@ def summarize_msa(file_path, num_lines_to_display=5):
 
 class hot_dna:
     ### Class for One Hot Encoding
-    def __init__(self, sequence):
+    def __init__(self, sequence, taxonomy):
         sequence = sequence.upper()
         self.sequence = self._preprocess_sequence(sequence)
         self.category_mapping = {'A': 0, 'C': 1, 'G': 2, 'T': 3, 'U': 3, '-': 4, 'N': 5}
         self.onehot = self._onehot_encode(self.sequence)
+        self.taxonomy = taxonomy.split(';')  # splitting by ';' to get each taxonomy level
 
     def _preprocess_sequence(self, sequence):
-        ambiguous_bases = {'R', 'Y', 'S', 'W', 'K', 'M', 'B', 'D', 'H', 'V'}
+        ambiguous_bases = {'R', 'Y', 'S', 'W', 'K', 'M', 'B', 'D', 'H', 'V', '.',}
         new_sequence = ""
         for base in sequence:
             if base in ambiguous_bases:
@@ -66,15 +67,16 @@ class hot_dna:
 
         return full_onehot_encoded
 
-class SequenceDataset(torch.utils.data.Dataset):
-    def __init__(self, sequences, labels):
+
+class SequenceDataset(Dataset):
+    def __init__(self, sequences, labels, taxonomy_level):
         self.sequences = sequences
-        self.labels = labels
+        self.labels = [label[taxonomy_level] for label in labels]
 
     def __getitem__(self, index):
         return {
-            "sequence": torch.tensor(self.sequences[index]).float(),
-            "label": torch.tensor(self.labels[index]).long(),
+            "sequence": self.sequences[index],
+            "label": self.labels[index],
         }
 
     def __len__(self):

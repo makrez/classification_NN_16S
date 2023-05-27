@@ -1,50 +1,72 @@
 import os
 from Bio import SeqIO
 from sklearn.preprocessing import LabelEncoder
+from sklearn.model_selection import StratifiedShuffleSplit
 import torch
 import torch.nn as nn
-from torch.utils.data import DataLoader
-from sklearn.model_selection import train_test_split, ParameterGrid
+from torch.utils.data import DataLoader, Dataset
+from sklearn.model_selection import ParameterGrid
+import numpy as np
+from torch.nn.utils.rnn import pad_sequence
 import logging
 import json
 from models import ConvClassifier
-import sequence_utils
-from sequence_utils import SequenceDataset
+from sequence_utils import hot_dna
 from plotting_functions import plot_training_results
 from training_functions import train_network
+
 
 # Set path and parameters
 msa_file_path = '../data/bacillus.aln'
 alignment_length = 4500
 
 # Set up a logger
-logging.basicConfig(filename='training.log', level=logging.INFO, 
+logging.basicConfig(filename='training.log', level=logging.INFO,
                     format='%(asctime)s %(levelname)-8s %(message)s',
                     datefmt='%Y-%m-%d %H:%M:%S')
 
-# Read and summarize the MSA
-sequence_utils.summarize_msa(msa_file_path)
+# Define SequenceDataset
+class SequenceDataset(Dataset):
+    def __init__(self, sequences, labels):
+        self.sequences = sequences
+        self.labels = labels
 
-### Read data
-flatted_sequence = list()
-sequence_labels = list()
+    def __getitem__(self, index):
+        return {
+            "sequence": self.sequences[index],
+            "label": self.labels[index],
+        }
+
+    def __len__(self):
+        return len(self.sequences)
+
+# Read and preprocess data
+sequences = []
+taxonomy_labels = []
 
 with open(msa_file_path) as handle:
-  for record in SeqIO.parse(handle, 'fasta'):
-    label = str(record.description).rsplit(';', 1)[-1]
-    seq_hot = sequence_utils.hot_dna(str(record.seq)[10:alignment_length+10]).onehot
+    for record in SeqIO.parse(handle, 'fasta'):
+        label = str(record.description)  # corrected this line
+        encoded_dna = hot_dna(str(record.seq)[10:alignment_length+10], label)
+        if len(encoded_dna.onehot) == alignment_length:
+            sequences.append(torch.tensor(encoded_dna.onehot).float())
+            taxonomy_labels.append(encoded_dna.taxonomy)
 
-    if len(seq_hot) == alignment_length:
-      flatted_sequence.append(seq_hot)
-      sequence_labels.append(label)
+# Convert the list of sequences into a tensor
+sequences_tensor = pad_sequence(sequences, batch_first=True)
 
-## Encode labels into integers
+# Create LabelEncoder and encode labels at specified taxonomy level
+taxonomy_level = 5  # specify the taxonomy level you want to train on
+taxonomy_labels_level = [labels[taxonomy_level] for labels in taxonomy_labels]
 label_encoder = LabelEncoder()
-encoded_labels = label_encoder.fit_transform(sequence_labels)
+encoded_labels = label_encoder.fit_transform(taxonomy_labels_level)
 num_classes = len(set(encoded_labels))
 
 # Split the data into training and test sets
-X_train, X_test, y_train, y_test = train_test_split(flatted_sequence, encoded_labels, test_size=0.2)
+sss = StratifiedShuffleSplit(n_splits=1, test_size=0.2)
+for train_index, test_index in sss.split(sequences_tensor, encoded_labels):
+    X_train, X_test = sequences_tensor[train_index], sequences_tensor[test_index]
+    y_train, y_test = encoded_labels[train_index], encoded_labels[test_index]
 
 # Create separate datasets and dataloaders for training and test sets
 train_dataset = SequenceDataset(X_train, y_train)
