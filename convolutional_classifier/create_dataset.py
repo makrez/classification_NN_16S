@@ -1,14 +1,14 @@
 import os
+import torch
+import numpy as np
+import pickle
+import logging
 from Bio import SeqIO
 from sklearn.preprocessing import LabelEncoder
 from sklearn.model_selection import StratifiedShuffleSplit
-import torch
-from torch.utils.data import DataLoader, Dataset
-import numpy as np
 from torch.nn.utils.rnn import pad_sequence
-import pickle
+from torch.utils.data import DataLoader, Dataset
 from sequence_utils import hot_dna
-import logging
 
 logger = logging.getLogger()
 logger.setLevel(logging.INFO)
@@ -38,6 +38,7 @@ dataset_filename = 'actinobacteria_sequence_dataset.pkl'
 
 os.makedirs(dataset_dir, exist_ok=True)
 
+
 class SequenceDataset(Dataset):
     def __init__(self, sequences, labels):
         self.sequences = sequences
@@ -52,7 +53,8 @@ class SequenceDataset(Dataset):
     def __len__(self):
         return len(self.sequences)
 
-sequences = []
+
+# First pass: compute labels and their frequencies
 taxonomy_labels = []
 
 with open(msa_file_path) as handle:
@@ -60,25 +62,56 @@ with open(msa_file_path) as handle:
         label = str(record.description)
         encoded_dna = hot_dna(str(record.seq)[:alignment_length], label)
         if len(encoded_dna.onehot) == alignment_length:
-            sequences.append(torch.tensor(encoded_dna.onehot).float())
             taxonomy_labels.append(encoded_dna.taxonomy)
 
         if i % 1000 == 0:  # log every 1000 sequences
             logging.info(f'Processed {i} sequences')
 
-sequences_tensor = pad_sequence(sequences, batch_first=True)
-
 taxonomy_labels_level = [labels[taxonomy_level] for labels in taxonomy_labels]
 label_encoder = LabelEncoder()
 encoded_labels = label_encoder.fit_transform(taxonomy_labels_level)
 
+# Compute train/test split
 sss = StratifiedShuffleSplit(n_splits=1, test_size=0.2)
-for train_index, test_index in sss.split(sequences_tensor, encoded_labels):
-    X_train, X_test = sequences_tensor[train_index], sequences_tensor[test_index]
-    y_train, y_test = encoded_labels[train_index], encoded_labels[test_index]
+train_index, test_index = next(sss.split(np.zeros_like(encoded_labels), encoded_labels))
 
-train_dataset = SequenceDataset(X_train, y_train)
-test_dataset = SequenceDataset(X_test, y_test)
+# Compute train/validation split
+sss = StratifiedShuffleSplit(n_splits=1, test_size=0.2)
+train_index, valid_index = next(sss.split(np.zeros_like(encoded_labels[train_index]), encoded_labels[train_index]))
 
+# Second pass: process sequence data in chunks and split into train/test/valid sets
+sequences_train = []
+sequences_valid = []
+sequences_test = []
+labels_train = []
+labels_valid = []
+labels_test = []
+
+with open(msa_file_path) as handle:
+    for i, record in enumerate(SeqIO.parse(handle, 'fasta')):
+        label = str(record.description)
+        encoded_dna = hot_dna(str(record.seq)[:alignment_length], label)
+        if len(encoded_dna.onehot) == alignment_length:
+            sequence_tensor = torch.tensor(encoded_dna.onehot).float()
+
+            if i in train_index:
+                sequences_train.append(sequence_tensor)
+                labels_train.append(encoded_dna.taxonomy)
+            elif i in valid_index:
+                sequences_valid.append(sequence_tensor)
+                labels_valid.append(encoded_dna.taxonomy)
+            elif i in test_index:
+                sequences_test.append(sequence_tensor)
+                labels_test.append(encoded_dna.taxonomy)
+
+        if i % 1000 == 0:  # log every 1000 sequences
+            logging.info(f'Processed {i} sequences')
+
+# Create train/test/valid datasets
+train_dataset = SequenceDataset(pad_sequence(sequences_train, batch_first=True), labels_train)
+valid_dataset = SequenceDataset(pad_sequence(sequences_valid, batch_first=True), labels_valid)
+test_dataset = SequenceDataset(pad_sequence(sequences_test, batch_first=True), labels_test)
+
+# Save datasets
 with open(os.path.join(dataset_dir, dataset_filename), 'wb') as f:
-    pickle.dump((train_dataset, test_dataset, label_encoder.classes_), f)
+    pickle.dump((train_dataset, valid_dataset, test_dataset, label_encoder.classes_), f)
