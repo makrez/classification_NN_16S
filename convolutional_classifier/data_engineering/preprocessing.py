@@ -42,9 +42,6 @@ def encode_labels(labels):
 def split_data(encoded_labels):
     sss = StratifiedShuffleSplit(n_splits=1, test_size=0.3, random_state=42)
     train_index, temp_index = next(sss.split(np.zeros_like(encoded_labels), encoded_labels))
-    
-    print(train_index[0])
-    print(temp_index[0])
     sss = StratifiedShuffleSplit(n_splits=1, test_size=0.5, random_state=42)
     valid_index, test_index = next(sss.split(np.zeros_like(encoded_labels[temp_index]), encoded_labels[temp_index]))
     

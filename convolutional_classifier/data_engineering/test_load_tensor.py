@@ -49,10 +49,10 @@ def load_sequence_and_labels(index, data_path):
 # Load the sequence tensor, original sequence, encoded label, original label, full taxonomy, 
 # and taxonomy of the encoded label for the tensor at index 5 in the training set
 sequence_tensor, original_sequence, encoded_label, original_label, full_label, taxonomy_of_encoded_label = \
-    load_sequence_and_labels(123, './datasets/train')
+    load_sequence_and_labels(6, './datasets/train')
 
-print(f"Encoded sequence: {sequence_tensor}")
-print(f"Original sequence: {original_sequence}")
+#print(f"Encoded sequence: {sequence_tensor}")
+#print(f"Original sequence: {original_sequence}")
 print(f"Encoded label: {encoded_label}")
 print(f"Original label: {original_label}")
 print(f"Full taxonomy: {full_label}")
