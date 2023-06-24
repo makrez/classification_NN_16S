@@ -11,7 +11,8 @@ handler = logging.FileHandler('create_dataset.log')
 handler.setLevel(logging.INFO)
 console_handler = logging.StreamHandler()
 console_handler.setLevel(logging.INFO)
-formatter = logging.Formatter('%(asctime)s [%(levelname)s] - %(message)s', datefmt='%Y-%m-%d %H:%M:%S')
+formatter = logging.Formatter('%(asctime)s [%(levelname)s] - %(message)s', 
+                              datefmt='%Y-%m-%d %H:%M:%S')
 handler.setFormatter(formatter)
 console_handler.setFormatter(formatter)
 logger.addHandler(handler)
@@ -26,7 +27,9 @@ dataset_dir = './datasets'
 # Ensure dataset directory exists
 os.makedirs(dataset_dir, exist_ok=True)
 
-taxonomy_labels, full_taxonomy_labels, class_counts, original_indices = load_sequences(msa_file_path, alignment_length, taxonomy_level)
+taxonomy_labels, full_taxonomy_labels, class_counts, original_indices =  \
+    load_sequences(msa_file_path, alignment_length, taxonomy_level)
+
 print(taxonomy_labels[0])
 encoded_labels = encode_labels(taxonomy_labels)
 print(encoded_labels[0])

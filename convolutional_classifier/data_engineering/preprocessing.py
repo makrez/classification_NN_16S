@@ -52,7 +52,10 @@ def split_data(encoded_labels):
     return train_index, valid_index, test_index
 
 
-def process_sequences(msa_file_path, alignment_length, taxonomy_level, class_counts, train_index, valid_index, test_index, train_path, valid_path, test_path, full_taxonomy_labels, original_indices):
+def process_sequences(msa_file_path, alignment_length, taxonomy_level, 
+                      class_counts, train_index, valid_index, 
+                      test_index, train_path, valid_path, test_path, 
+                      full_taxonomy_labels, original_indices):
     labels_train = []
     labels_valid = []
     labels_test = []
@@ -68,33 +71,45 @@ def process_sequences(msa_file_path, alignment_length, taxonomy_level, class_cou
 
     with open(msa_file_path) as handle:
         for i, record in enumerate(SeqIO.parse(handle, 'fasta')):
-            print(f"Processing record {i}: sequence {record.seq[:50]}, label {record.description.split(';')[taxonomy_level]}")
+            print(f"Processing record {i}: sequence {record.seq[:50]}, 
+                  label {record.description.split(';')[taxonomy_level]}")
+            
             if i not in original_indices:
                 continue
 
             label = record.description.split(';')
-            if len(str(record.seq)[:alignment_length]) == alignment_length and len(label) > taxonomy_level:
+            if len(str(record.seq)[:alignment_length]) == alignment_length and \
+                  len(label) > taxonomy_level:
                 current_label = label[taxonomy_level]
 
-                encoded_dna = hot_dna(str(record.seq)[:alignment_length], record.description)
+                encoded_dna = hot_dna(str(record.seq)[:alignment_length], 
+                                      record.description)
                 sequence_tensor = torch.tensor(encoded_dna.onehot).float()
 
                 original_index = original_indices.index(i)
+
                 if original_index in train_index_dict:
-                    print(f"Saving to train set: original index {i}, new index {train_index_dict[i]}")
-                    torch.save(sequence_tensor, f'{train_path}/{train_index_dict[original_index]}.pt')
+                    print(f"Saving to train set: original index {i}, 
+                          new index {train_index_dict[i]}")
+                    torch.save(sequence_tensor, 
+                               f'{train_path}/{train_index_dict[original_index]}.pt')           
                     labels_train.append([original_index, encoded_dna.taxonomy])  # Append original index with label
-                    full_labels_train.append([original_index, full_taxonomy_labels[original_index]])  # Append original index with label
-                elif original_index in valid_index_dict:
+                    full_labels_train.append([original_index, 
+                                              full_taxonomy_labels[original_index]])  # Append original index with label
+                elif orisginal_index in valid_index_dict:
                     print(f"Saving to validation set: original index {i}, new index {valid_index_dict[i]}")
-                    torch.save(sequence_tensor, f'{valid_path}/{valid_index_dict[original_index]}.pt')
+                    torch.save(sequence_tensor, 
+                               f'{valid_path}/{valid_index_dict[original_index]}.pt')
                     labels_valid.append([original_index, encoded_dna.taxonomy])
-                    full_labels_valid.append([original_index, full_taxonomy_labels[original_index]])
+                    full_labels_valid.append([original_index, 
+                                              full_taxonomy_labels[original_index]])
                 elif original_index in test_index_dict:
                     print(f"Saving to test set: original index {i}, new index {test_index_dict[i]}")
-                    torch.save(sequence_tensor, f'{test_path}/{test_index_dict[original_index]}.pt')
+                    torch.save(sequence_tensor, 
+                               f'{test_path}/{test_index_dict[original_index]}.pt')
                     labels_test.append([original_index, encoded_dna.taxonomy])
-                    full_labels_test.append([original_index, full_taxonomy_labels[original_index]])
+                    full_labels_test.append([original_index, 
+                                             full_taxonomy_labels[original_index]])
 
     pickle.dump(labels_train, open(f'{train_path}/labels.pkl', 'wb'))
     pickle.dump(labels_valid, open(f'{valid_path}/labels.pkl', 'wb'))
@@ -103,4 +118,3 @@ def process_sequences(msa_file_path, alignment_length, taxonomy_level, class_cou
     pickle.dump(full_labels_train, open(f'{train_path}/full_labels.pkl', 'wb'))
     pickle.dump(full_labels_valid, open(f'{valid_path}/full_labels.pkl', 'wb'))
     pickle.dump(full_labels_test, open(f'{test_path}/full_labels.pkl', 'wb'))
-
