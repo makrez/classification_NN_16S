@@ -1,7 +1,7 @@
 import os
 import logging
 from preprocessing import load_sequences, encode_labels, split_data, process_sequences
-from dataset import SequenceDataset, hot_dna
+from dataset_classes import SequenceDataset, hot_dna
 import re
 
 # Define logger
@@ -31,9 +31,11 @@ taxonomy_labels, full_taxonomy_labels, class_counts, original_indices =  \
     load_sequences(msa_file_path, alignment_length, taxonomy_level)
 
 print(taxonomy_labels[0])
-encoded_labels = encode_labels(taxonomy_labels)
+
+encoded_labels, label_map, label_encoder = encode_labels(taxonomy_labels)
 print(encoded_labels[0])
-train_index, valid_index, test_index = split_data(encoded_labels[0])
+
+train_index, valid_index, test_index = split_data(encoded_labels)
 
 # Create paths for your train/validation/test sequence tensors
 train_path = os.path.join(dataset_dir, 'train')
@@ -45,4 +47,8 @@ os.makedirs(train_path, exist_ok=True)
 os.makedirs(valid_path, exist_ok=True)
 os.makedirs(test_path, exist_ok=True)
 
-process_sequences(msa_file_path, alignment_length, taxonomy_level, class_counts, train_index, valid_index, test_index, train_path, valid_path, test_path, full_taxonomy_labels, original_indices)
+process_sequences(msa_file_path, alignment_length, taxonomy_level, encoded_labels, 
+                  class_counts, train_index, valid_index, 
+                  test_index, train_path, valid_path, 
+                  test_path, full_taxonomy_labels, original_indices, label_map, label_encoder)
+

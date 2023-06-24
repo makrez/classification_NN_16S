@@ -1,69 +1,59 @@
-import numpy as np
-import torch
+import os
 import pickle
+import torch
+from Bio.Seq import Seq
+from dataset_classes import hot_dna
 
-def test_load_tensor():
-    dataset_dir = './datasets'
-    tensor_index = 2590  # Specify the index of the tensor you want to load
+taxonomy_level = 5
 
-    # Load the tensor
-    sequence_tensor = torch.load(f'{dataset_dir}/train/{tensor_index}.pt')
+def load_sequence_and_labels(index, data_path):
+    # Load the LabelEncoder and LabelMap
+    label_encoder = pickle.load(open(f'{data_path}/label_encoder.pkl', 'rb'))
+    label_map = pickle.load(open(f'{data_path}/label_map.pkl', 'rb'))
 
-    # Load the labels
-    encoded_labels = pickle.load(open(f'{dataset_dir}/train/labels.pkl', 'rb'))
-    print(encoded_labels[1])
-    full_taxonomy_labels = pickle.load(open(f'{dataset_dir}/train/full_labels.pkl', 'rb'))
+    inverse_label_map = {v: k for k, v in label_map.items()}
 
-    # Find the corresponding label for the tensor using original index
-    encoded_label_data = next((x for x in encoded_labels if x[0] == tensor_index), None)
-    print(f'encoded label data: {encoded_label_data}')
-    full_taxonomy_label_data = next((x for x in full_taxonomy_labels if x[0] == tensor_index), None)
+    sequence_tensor = torch.load(f'{data_path}/{index}.pt')
 
-    if encoded_label_data is not None and full_taxonomy_label_data is not None:
-        original_index = encoded_label_data[0]
-        encoded_label = encoded_label_data[1]
-        full_taxonomy_label = full_taxonomy_label_data[1]
+    # Initialize hot_dna class with empty sequence and taxonomy (for using the _onehot_decode method)
+    dna_decoder = hot_dna('', '')
 
-        print(f'Sequence tensor:\n{sequence_tensor}')
-        print(f'Encoded label: {encoded_label}')
-        print(f'Full taxonomy label: {full_taxonomy_label}')
+    # Decode the sequence tensor to the original sequence
+    original_sequence = dna_decoder._onehot_decode(sequence_tensor)
 
+    # Load the labels and full labels
+    labels = pickle.load(open(f'{data_path}/labels.pkl', 'rb'))
+    full_labels = pickle.load(open(f'{data_path}/full_labels.pkl', 'rb'))
+
+    # Find the entry with the matching index
+    label_entry = next((item for item in labels if item[0] == index), None)
+    full_label_entry = next((item for item in full_labels if item[0] == index), None)
+
+    # If found, extract the actual label and full label
+    if label_entry is not None:
+        encoded_label = label_entry[1]
+        original_label = label_encoder.inverse_transform([encoded_label])[0]
     else:
-        print(f"No data found for tensor index {tensor_index}")
+        encoded_label = None
+        original_label = None
 
-test_load_tensor()
-# def test_load_tensor():
-#     dataset_dir = './datasets'
-#     tensor_index = 2590  # Specify the index of the tensor you want to load
+    if full_label_entry is not None:
+        full_label = full_label_entry[1]
+        taxonomy_of_encoded_label = full_label[taxonomy_level]
+    else:
+        full_label = None
+        taxonomy_of_encoded_label = None
 
-#     # Load the tensor
-#     sequence_tensor = torch.load(f'{dataset_dir}/train/{tensor_index}.pt')
+    return sequence_tensor, original_sequence, encoded_label, original_label, full_label, taxonomy_of_encoded_label
 
-#     # Load the labels
-#     encoded_labels = pickle.load(open(f'{dataset_dir}/train/labels.pkl', 'rb'))
-#     full_taxonomy_labels = pickle.load(open(f'{dataset_dir}/train/full_labels.pkl', 'rb'))
+# Load the sequence tensor, original sequence, encoded label, original label, full taxonomy, 
+# and taxonomy of the encoded label for the tensor at index 5 in the training set
+sequence_tensor, original_sequence, encoded_label, original_label, full_label, taxonomy_of_encoded_label = \
+    load_sequence_and_labels(123, './datasets/train')
 
-#     # Load the LabelEncoder
-#     label_encoder = pickle.load(open('./label_encoder.pkl', 'rb'))
-
-#     # Find the corresponding label for the tensor using original index
-#     encoded_label_data = next((x for x in encoded_labels if x[0] == tensor_index), None)
-#     full_taxonomy_label_data = next((x for x in full_taxonomy_labels if x[0] == tensor_index), None)
-
-#     if encoded_label_data is not None and full_taxonomy_label_data is not None:
-#         original_index = encoded_label_data[0]
-#         encoded_label = encoded_label_data[1]
-#         full_taxonomy_label = full_taxonomy_label_data[1]
-
-#         # Get the taxonomy level name using the LabelEncoder
-#         taxonomy_level_name = label_encoder.inverse_transform([encoded_label])[0]
-
-#         print(f'Sequence tensor:\n{sequence_tensor}')
-#         print(f'Encoded label: {encoded_label}')
-#         print(f'Full taxonomy label: {full_taxonomy_label}')
-#         print(f'Taxonomy level name: {taxonomy_level_name}')
-
-#     else:
-#         print(f"No data found for tensor index {tensor_index}")
-
-# test_load_tensor()
+print(f"Encoded sequence: {sequence_tensor}")
+print(f"Original sequence: {original_sequence}")
+print(f"Encoded label: {encoded_label}")
+print(f"Original label: {original_label}")
+print(f"Full taxonomy: {full_label}")
+print(f"Taxonomy of the encoded label: {taxonomy_of_encoded_label}")

@@ -4,7 +4,6 @@ import numpy as np
 import re
 from sklearn.preprocessing import LabelEncoder, OneHotEncoder
 
-
 # Define SequenceDataset
 class SequenceDataset(Dataset):
     def __init__(self, sequence_paths, labels):
@@ -29,7 +28,8 @@ class hot_dna:
         sequence = sequence.upper()
         self.sequence = self._preprocess_sequence(sequence)
         self.category_mapping = {'A': 0, 'C': 1, 'G': 2, 'T': 3, 'U': 3, '-': 4, 'N': 5}
-        self.onehot = self._onehot_encode(self.sequence)
+        if sequence:
+            self.onehot = self._onehot_encode(self.sequence)
         self.taxonomy = taxonomy.split(';')  # splitting by ';' to get each taxonomy level
 
     def _preprocess_sequence(self, sequence):
@@ -54,3 +54,13 @@ class hot_dna:
         full_onehot_encoded[:, :onehot_encoded.shape[1]] = onehot_encoded
 
         return full_onehot_encoded
+
+    def _onehot_decode(self, onehot_encoded):
+        # Reverse the mapping dictionary
+        reverse_category_mapping = {v: k for k, v in self.category_mapping.items()}
+        # Convert one-hot encoding back to integer encoding
+        integer_encoded = np.argmax(onehot_encoded, axis=1)
+        # Convert integer encoding back to original sequence
+        original_sequence = "".join(reverse_category_mapping[i.item()] for i in integer_encoded)
+        return original_sequence
+
