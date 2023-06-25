@@ -16,10 +16,6 @@ from plotting_functions import plot_training_results
 from training_functions import train_network
 
 
-# Set path and parameters
-msa_file_path = '../data/bacillus.aln'
-alignment_length = 50000
-
 # Set up a logger
 logging.basicConfig(filename='training.log', level=logging.INFO,
                     format='%(asctime)s %(levelname)-8s %(message)s',
@@ -41,7 +37,6 @@ class SequenceDataset(Dataset):
 
     def __len__(self):
         return len(self.file_paths)
-
 
 
 # Read and preprocess data
