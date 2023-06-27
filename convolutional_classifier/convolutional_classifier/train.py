@@ -14,62 +14,46 @@ import torch.nn.functional as F
 from model_summarise_functions import plot_confusion_matrix, plot_train_test_curves, print_f1_and_classification_report
 import yaml
 from dataset_classes import hot_dna
-#from test_load_tensor import load_sequence_and_labels
-torch.cuda.empty_cache()
 
-data_folder="/data/users/mkreuzer/classification_NN_16S/convolutional_classifier/data_engineering/datasets_bacillus"
-
-alignment_length = 4559
+data_folder="/scratch/mk_cas/datasets"
 batch_size = 32
+alignment_length = 50000
 
 class SequenceDataset(Dataset):
-    def __init__(self, file_paths, labels):
-        self.file_paths = file_paths
-        self.labels = labels
+    def __init__(self, folder_path):
+        self.pt_files = [f for f in os.listdir(folder_path) if f.endswith(".pt")]
+
+        # Load labels into a dictionary
+        with open(os.path.join(folder_path, 'labels.pkl'), 'rb') as f:
+            labels = pickle.load(f)
+        self.labels = {label['sequence_id']: label['label'] for label in labels}
+
+        self.folder_path = folder_path
 
     def __getitem__(self, index):
-        # Load tensor from file
-        sequence = torch.load(self.file_paths[index])
-        label = torch.tensor(self.labels[index][1], dtype=torch.long)  # Convert labels to tensor
-        return {
-            "sequence": sequence,
-            "label": label,
-        }
+        sequence_file = self.pt_files[index]
+        sequence_id = os.path.splitext(sequence_file)[0]
+        sequence_dict = torch.load(os.path.join(self.folder_path, sequence_file))
+        sequence = sequence_dict['sequence_tensor']
+        label = torch.tensor(self.labels[sequence_id], dtype=torch.long)
+        return {'sequence': sequence, 'label': label}
 
     def __len__(self):
-        return len(self.file_paths)
+        return len(self.pt_files)
 
+# Create datasets
+train_dataset = SequenceDataset(os.path.join(data_folder, 'train'))
+test_dataset = SequenceDataset(os.path.join(data_folder, 'test'))
 
-# Specify your training and testing tensor paths and labels here
-num_train_samples = len(os.listdir(os.path.join(data_folder, 'train')))
-num_test_samples = len(os.listdir(os.path.join(data_folder, 'test')))
-
-X_train_paths = [os.path.join(os.path.join(data_folder, 'train'), f) for f in os.listdir(os.path.join(data_folder, 'train/')) if f.endswith("pt")]
-X_train_paths.sort(key=lambda x: int(os.path.splitext(os.path.basename(x))[0]))  # Sort file paths based on filename (original index)
-with open(os.path.join(data_folder, 'train/labels.pkl'), 'rb') as f:
-    y_train = pickle.load(f)
-
-print(X_train_paths[1:5])
-print(y_train)
-
-
-X_test_paths = [os.path.join(os.path.join(data_folder, 'test'), f) for f in os.listdir(os.path.join(data_folder, 'test/')) if f.endswith("pt")]
-X_test_paths.sort(key=lambda x: int(os.path.splitext(os.path.basename(x))[0]))  # Sort file paths based on filename (original index)
-with open(os.path.join(data_folder, 'test/labels.pkl'), 'rb') as f:
-    y_test = pickle.load(f)
-
-# Create separate datasets and dataloaders for training and test sets
-train_dataset = SequenceDataset(X_train_paths, y_train)
-test_dataset = SequenceDataset(X_test_paths, y_test)
-
+# Create dataloaders
 train_dataloader = DataLoader(train_dataset, batch_size=batch_size, shuffle=True)
 test_dataloader = DataLoader(test_dataset, batch_size=batch_size, shuffle=False)
 
 device = torch.device("cuda" if torch.cuda.is_available() else "cpu")
 torch.cuda.empty_cache()
-num_classes = len(np.unique([item[1] for item in y_train]))
+num_classes = len(set(train_dataset.labels.values()))
 
-model = ConvClassifierBacillus(input_length=alignment_length, num_classes=num_classes)
+model = ConvClassifier2(input_length=alignment_length, num_classes=num_classes)
 
 if torch.cuda.device_count() > 1:
     print("Let's use", torch.cuda.device_count(), "GPUs!")
@@ -129,11 +113,9 @@ for params in grid:
     logger.addHandler(handler)
     logger.addHandler(console_handler)
     # Reset the model and optimizer
-    model = ConvClassifierBacillus(alignment_length, num_classes)
+    model = ConvClassifier2(alignment_length, num_classes)
     model.to(device)
     optimizer = torch.optim.Adam(model.parameters(), lr=params['lr'])
-
-
 
     logging.info(f"Starting training with lr={params['lr']}, n_epoch={params['n_epoch']}")
     print(f"Training with lr={params['lr']}, n_epoch={params['n_epoch']}")

@@ -19,10 +19,10 @@ logger.addHandler(handler)
 logger.addHandler(console_handler)
 
 # Define parameters
-msa_file_path = '../../data/bacillus.aln'
-alignment_length = 4559
-taxonomy_level = 6  # specify the taxonomy level you want to train on
-dataset_dir = './datasets_bacillus'
+msa_file_path = '../../data/Actinobacteria_10000_seqs.fasta'
+alignment_length = 50000
+taxonomy_level = 5  # specify the taxonomy level you want to train on
+dataset_dir = '/scratch/mk_cas/datasets'
 
 # Ensure dataset directory exists
 os.makedirs(dataset_dir, exist_ok=True)

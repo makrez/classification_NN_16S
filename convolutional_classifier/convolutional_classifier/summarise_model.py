@@ -6,14 +6,17 @@ from model_summarise_functions import plot_confusion_matrix, plot_train_test_cur
 import numpy as np
 
 def summarize_model(model_evaluation_dir):
-    with open('../data_engineering/datasets_bacillus/train/label_map.pkl', 'rb') as f:
+    with open('/scratch/mk_cas/datasets/train/label_map.pkl', 'rb') as f:
         label_map = pickle.load(f)
+    print(label_map)
 
     # Load the predictions and losses
     train_losses = np.load(os.path.join(model_evaluation_dir, 'train_losses.npy'))
     test_losses = np.load(os.path.join(model_evaluation_dir, 'test_losses.npy'))
     y_true = np.load(os.path.join(model_evaluation_dir, 'y_true.npy'))
+    print(y_true)
     y_pred = np.load(os.path.join(model_evaluation_dir, 'y_pred.npy'))
+    print(y_pred)
 
     plot_confusion_matrix(y_true, y_pred, label_map, model_evaluation_dir)
     plot_train_test_curves(train_losses, test_losses, model_evaluation_dir)

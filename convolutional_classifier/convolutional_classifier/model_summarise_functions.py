@@ -6,6 +6,8 @@ import numpy as np
 import pickle
 import os
 
+import matplotlib.colors as colors
+
 def plot_confusion_matrix(y_true, y_pred, labels_map, subdirectory):
     # Calculate the confusion matrix
     cm = confusion_matrix(y_true, y_pred)
@@ -14,8 +16,11 @@ def plot_confusion_matrix(y_true, y_pred, labels_map, subdirectory):
     fig, ax = plt.subplots(figsize=(10, 10))
     labels_map =  {v: k for k, v in labels_map.items()}
 
+    # Create a logarithmic colormap
+    log_norm = colors.LogNorm(vmin=cm.min().min()+1, vmax=cm.max().max())
+
     # Create a heatmap using the confusion matrix
-    sns.heatmap(cm, annot=False, fmt="d", cmap="Blues", square=True, cbar=False,
+    sns.heatmap(cm, annot=False, fmt="d", cmap="Blues", square=True, cbar=False, norm=log_norm,
                 xticklabels=[labels_map[i] for i in np.unique(y_true)],
                 yticklabels=[labels_map[i] for i in np.unique(y_true)], ax=ax)
 
@@ -31,8 +36,6 @@ def plot_confusion_matrix(y_true, y_pred, labels_map, subdirectory):
     # Save the figure
     plt.savefig(os.path.join(subdirectory, 'confusion_matrix.png'), dpi=300, bbox_inches='tight')
     plt.close()
-
-
 
 def print_f1_and_classification_report(y_true, y_pred, labels_map, subdirectory):
     labels = sorted(list(labels_map.keys()), key=lambda x: labels_map[x])

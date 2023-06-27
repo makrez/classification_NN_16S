@@ -50,7 +50,6 @@ def split_data(encoded_labels):
     
     return train_index, valid_index, test_index
 
-
 def process_sequences(msa_file_path, alignment_length, taxonomy_level, encoded_labels, 
                       class_counts, train_index, valid_index, 
                       test_index, train_path, valid_path, 
@@ -69,7 +68,6 @@ def process_sequences(msa_file_path, alignment_length, taxonomy_level, encoded_l
 
     with open(msa_file_path) as handle:
         for i, record in enumerate(SeqIO.parse(handle, 'fasta')):
-            
             if i not in original_indices:
                 continue
 
@@ -82,18 +80,20 @@ def process_sequences(msa_file_path, alignment_length, taxonomy_level, encoded_l
 
                 original_index = original_indices.index(i)
 
+                sequence_id = f"{original_index}"  # Unique identifier for each sequence
+
                 if original_index in train_index_set:
-                    torch.save(sequence_tensor, f'{train_path}/{original_index}.pt')  # Save with original index
-                    labels_train.append([original_index, label_map[current_label]])  
-                    full_labels_train.append([original_index, full_taxonomy_labels[original_index]]) 
+                    torch.save({"sequence_id": sequence_id, "sequence_tensor": sequence_tensor}, f'{train_path}/{sequence_id}.pt')  # Save with sequence_id
+                    labels_train.append({"sequence_id": sequence_id, "label": label_map[current_label]})  
+                    full_labels_train.append({"sequence_id": sequence_id, "label": full_taxonomy_labels[original_index]}) 
                 elif original_index in valid_index_set:
-                    torch.save(sequence_tensor, f'{valid_path}/{original_index}.pt')  # Save with original index
-                    labels_valid.append([original_index, label_map[current_label]])
-                    full_labels_valid.append([original_index, full_taxonomy_labels[original_index]])
+                    torch.save({"sequence_id": sequence_id, "sequence_tensor": sequence_tensor}, f'{valid_path}/{sequence_id}.pt')  # Save with sequence_id
+                    labels_valid.append({"sequence_id": sequence_id, "label": label_map[current_label]})
+                    full_labels_valid.append({"sequence_id": sequence_id, "label": full_taxonomy_labels[original_index]})
                 elif original_index in test_index_set:
-                    torch.save(sequence_tensor, f'{test_path}/{original_index}.pt')  # Save with original index
-                    labels_test.append([original_index, label_map[current_label]])
-                    full_labels_test.append([original_index, full_taxonomy_labels[original_index]])
+                    torch.save({"sequence_id": sequence_id, "sequence_tensor": sequence_tensor}, f'{test_path}/{sequence_id}.pt')  # Save with sequence_id
+                    labels_test.append({"sequence_id": sequence_id, "label": label_map[current_label]})
+                    full_labels_test.append({"sequence_id": sequence_id, "label": full_taxonomy_labels[original_index]})
 
     pickle.dump(labels_train, open(f'{train_path}/labels.pkl', 'wb'))
     pickle.dump(labels_valid, open(f'{valid_path}/labels.pkl', 'wb'))
@@ -106,3 +106,6 @@ def process_sequences(msa_file_path, alignment_length, taxonomy_level, encoded_l
     # Save label map and label encoder
     pickle.dump(label_map, open(f'{train_path}/label_map.pkl', 'wb'))
     pickle.dump(label_encoder, open(f'{train_path}/label_encoder.pkl', 'wb'))
+
+
+

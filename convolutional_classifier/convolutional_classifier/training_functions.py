@@ -55,10 +55,10 @@ def train_network(n_epochs, model, optimizer, criterion, train_dataloader, test_
         y_pred = []
         model.eval()
         with torch.no_grad():
-            for batch in test_dataloader:
+            for i, batch in enumerate(test_dataloader, 1):
                 sequence_data = batch["sequence"].permute(0, 2, 1).to(device)
                 labels = batch["label"].to(device)
-
+            
                 outputs = model(sequence_data)
                 _, preds = torch.max(outputs, 1)
 

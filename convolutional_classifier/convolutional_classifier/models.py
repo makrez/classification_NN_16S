@@ -8,7 +8,7 @@ class ConvClassifier(nn.Module):
         self.num_classes = num_classes
 
         self.features = nn.Sequential(
-            nn.Conv1d(5, 16, kernel_size=3, stride=1, padding=1),
+            nn.Conv1d(6, 16, kernel_size=3, stride=1, padding=1),
             nn.ReLU(inplace=True),
             nn.Conv1d(16, 32, kernel_size=3, stride=2, padding=1),
             nn.ReLU(inplace=True),
@@ -20,7 +20,7 @@ class ConvClassifier(nn.Module):
 
         # Define the classifier layers
         self.classifier = nn.Sequential(
-            nn.Linear(6840, 1200),
+            nn.Linear(6250, 1200),
             nn.ReLU(inplace=True),
             #nn.Dropout(0.5),
             nn.Linear(1200, 600),
@@ -39,11 +39,7 @@ class ConvClassifier(nn.Module):
 
     def forward(self, x):
         # The data is in the first 5 channels and the mask is in the 6th channel
-        data = x[:, :5, :]
-        mask = x[:, 5, :]
-
-        # Multiply data by mask (this sets the masked values to zero)
-        data = data * mask.unsqueeze(1)  # we need to add an extra dimension to mask for broadcasting to work
+        data = x[:, :6, :]
 
         data = self.features(data)
 
@@ -58,7 +54,7 @@ class ConvClassifier2(nn.Module):
         self.num_classes = num_classes
 
         self.features = nn.Sequential(
-            nn.Conv1d(5, 16, kernel_size=3, stride=1, padding=1),
+            nn.Conv1d(6, 16, kernel_size=3, stride=1, padding=1),
             nn.ReLU(inplace=True),
             nn.Conv1d(16, 32, kernel_size=3, stride=2, padding=1),
             nn.ReLU(inplace=True),
@@ -75,7 +71,7 @@ class ConvClassifier2(nn.Module):
         )
             # Define the classifier layers
         self.classifier = nn.Sequential(
-            nn.Linear(75000, 1200),
+            nn.Linear(4*1559, 1200),
             nn.ReLU(inplace=True),
             #nn.Dropout(0.5),
             nn.Linear(1200, 600), # Match output size of previous layer
@@ -96,18 +92,13 @@ class ConvClassifier2(nn.Module):
 
     def forward(self, x):
         # The data is in the first 5 channels and the mask is in the 6th channel
-        data = x[:, :5, :]
-        mask = x[:, 5, :]
-
-        # Multiply data by mask (this sets the masked values to zero)
-        data = data * mask.unsqueeze(1)  # we need to add an extra dimension to mask for broadcasting to work
+        data = x[:, :6, :]
         
         for i, layer in enumerate(self.features):
             data = layer(data)
-            #print(f"After layer {i+1}, shape is {data.shape}")
 
         data = data.view(data.size(0), -1)
-        #print(f"Shape before classifier: {data.shape}")
+ 
         
         data = self.classifier(data)
         return data
@@ -120,7 +111,7 @@ class ConvClassifierBacillus(nn.Module):
         self.num_classes = num_classes
 
         self.features = nn.Sequential(
-            nn.Conv1d(5, 16, kernel_size=3, stride=1, padding=1),
+            nn.Conv1d(6, 16, kernel_size=3, stride=1, padding=1),
             nn.ReLU(inplace=True),
             nn.Conv1d(16, 32, kernel_size=3, stride=2, padding=1),
             nn.ReLU(inplace=True),
@@ -129,19 +120,20 @@ class ConvClassifierBacillus(nn.Module):
             nn.ReLU(inplace=True),
             nn.MaxPool1d(2, stride=2)
         )
-        # Define the classifier
+
+        # Define the classifier layers
         self.classifier = nn.Sequential(
-            nn.Linear(6840, 1200),
+            nn.Linear(570 * 12, 562*6),
             nn.ReLU(inplace=True),
-            #nn.Dropout(0.5),
-            nn.Linear(1200, 600),
+            nn.Linear(562 * 6, 562*3),
             nn.ReLU(inplace=True),
-            nn.Linear(600, 281),
+            nn.Linear(562 * 3, 562),
+            nn.ReLU(inplace=True),
+            nn.Linear(562, 281),
             nn.ReLU(inplace=True),
             nn.Linear(281, num_classes)
-    )
-
-    
+        )
+        
         # Initialize weights with He initialization
         for m in self.modules():
             if isinstance(m, nn.Conv1d):
@@ -151,15 +143,25 @@ class ConvClassifierBacillus(nn.Module):
 
 
     def forward(self, x):
-        # The data is in the first 5 channels and the mask is in the 6th channel
-        data = x[:, :5, :]
-        mask = x[:, 5, :]
-
-        # Multiply data by mask (this sets the masked values to zero)
-        data = data * mask.unsqueeze(1)  # we need to add an extra dimension to mask for broadcasting to work
+        data = x[:, :6, :]
 
         data = self.features(data)
 
         data = data.view(data.size(0), -1)
         data = self.classifier(data)
         return data
+
+
+    # def forward(self, x):
+    #     # The data is in the first 5 channels and the mask is in the 6th channel
+    #     data = x[:, :5, :]
+    #     mask = x[:, 5, :]
+
+    #     # Multiply data by mask (this sets the masked values to zero)
+    #     data = data * mask.unsqueeze(1)  # we need to add an extra dimension to mask for broadcasting to work
+
+    #     data = self.features(data)
+
+    #     data = data.view(data.size(0), -1)
+    #     data = self.classifier(data)
+    #     return data
