@@ -5,7 +5,7 @@ import os
 import seaborn as sns
 import matplotlib.pyplot as plt
 
-output_path = "dataset_stats"
+output_path = "dataset_stats_bacillus"
 os.makedirs(output_path, exist_ok=True)
 
 def load_labels_and_get_counts(dataset_path):
@@ -43,9 +43,9 @@ def create_counts_dataframe(train_counts, valid_counts, test_counts, label_encod
 
     return df
 
-train_path = "datasets/train"
-valid_path = "datasets/valid"
-test_path = "datasets/test"
+train_path = "datasets_bacillus/train"
+valid_path = "datasets_bacillus/valid"
+test_path = "datasets_bacillus/test"
 
 label_encoder = pickle.load(open(f'{train_path}/label_encoder.pkl', 'rb'))
 

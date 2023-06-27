@@ -7,7 +7,7 @@ import re
 # Define logger
 logger = logging.getLogger()
 logger.setLevel(logging.INFO)
-handler = logging.FileHandler('create_dataset.log')
+handler = logging.FileHandler('create_dataset_bacillus.log')
 handler.setLevel(logging.INFO)
 console_handler = logging.StreamHandler()
 console_handler.setLevel(logging.INFO)
@@ -19,10 +19,10 @@ logger.addHandler(handler)
 logger.addHandler(console_handler)
 
 # Define parameters
-msa_file_path = '../../data/Actinobacteria_10000_seqs.fasta'
-alignment_length = 50000
-taxonomy_level = 5  # specify the taxonomy level you want to train on
-dataset_dir = './datasets'
+msa_file_path = '../../data/bacillus.aln'
+alignment_length = 4559
+taxonomy_level = 6  # specify the taxonomy level you want to train on
+dataset_dir = './datasets_bacillus'
 
 # Ensure dataset directory exists
 os.makedirs(dataset_dir, exist_ok=True)

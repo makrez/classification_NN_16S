@@ -63,9 +63,9 @@ def process_sequences(msa_file_path, alignment_length, taxonomy_level, encoded_l
     full_labels_valid = []
     full_labels_test = []
 
-    train_index_dict = {original_idx: i for i, original_idx in enumerate(train_index)}
-    valid_index_dict = {original_idx: i for i, original_idx in enumerate(valid_index)}
-    test_index_dict = {original_idx: i for i, original_idx in enumerate(test_index)}
+    train_index_set = set(train_index)
+    valid_index_set = set(valid_index)
+    test_index_set = set(test_index)
 
     with open(msa_file_path) as handle:
         for i, record in enumerate(SeqIO.parse(handle, 'fasta')):
@@ -82,16 +82,16 @@ def process_sequences(msa_file_path, alignment_length, taxonomy_level, encoded_l
 
                 original_index = original_indices.index(i)
 
-                if original_index in train_index_dict:
-                    torch.save(sequence_tensor, f'{train_path}/{train_index_dict[original_index]}.pt')           
-                    labels_train.append([original_index, label_map[current_label]])  # Append original index with encoded label
+                if original_index in train_index_set:
+                    torch.save(sequence_tensor, f'{train_path}/{original_index}.pt')  # Save with original index
+                    labels_train.append([original_index, label_map[current_label]])  
                     full_labels_train.append([original_index, full_taxonomy_labels[original_index]]) 
-                elif original_index in valid_index_dict:
-                    torch.save(sequence_tensor, f'{valid_path}/{valid_index_dict[original_index]}.pt')
+                elif original_index in valid_index_set:
+                    torch.save(sequence_tensor, f'{valid_path}/{original_index}.pt')  # Save with original index
                     labels_valid.append([original_index, label_map[current_label]])
                     full_labels_valid.append([original_index, full_taxonomy_labels[original_index]])
-                elif original_index in test_index_dict:
-                    torch.save(sequence_tensor, f'{test_path}/{test_index_dict[original_index]}.pt')
+                elif original_index in test_index_set:
+                    torch.save(sequence_tensor, f'{test_path}/{original_index}.pt')  # Save with original index
                     labels_test.append([original_index, label_map[current_label]])
                     full_labels_test.append([original_index, full_taxonomy_labels[original_index]])
 

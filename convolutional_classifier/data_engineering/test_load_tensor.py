@@ -4,7 +4,7 @@ import torch
 from Bio.Seq import Seq
 from dataset_classes import hot_dna
 
-taxonomy_level = 5
+taxonomy_level = 6
 
 def load_sequence_and_labels(index, data_path):
     # Load the LabelEncoder and LabelMap
@@ -13,13 +13,13 @@ def load_sequence_and_labels(index, data_path):
 
     inverse_label_map = {v: k for k, v in label_map.items()}
 
-    sequence_tensor = torch.load(f'{data_path}/{index}.pt')
+    sequence_tensor = torch.load(f'{data_path}/{index}.pt')[1458:1468]
 
     # Initialize hot_dna class with empty sequence and taxonomy (for using the _onehot_decode method)
     dna_decoder = hot_dna('', '')
 
     # Decode the sequence tensor to the original sequence
-    original_sequence = dna_decoder._onehot_decode(sequence_tensor)
+    original_sequence = dna_decoder._onehot_decode(sequence_tensor)[1458:1468]
 
     # Load the labels and full labels
     labels = pickle.load(open(f'{data_path}/labels.pkl', 'rb'))
@@ -48,11 +48,12 @@ def load_sequence_and_labels(index, data_path):
 
 # Load the sequence tensor, original sequence, encoded label, original label, full taxonomy, 
 # and taxonomy of the encoded label for the tensor at index 5 in the training set
-sequence_tensor, original_sequence, encoded_label, original_label, full_label, taxonomy_of_encoded_label = \
-    load_sequence_and_labels(6, './datasets/train')
 
-#print(f"Encoded sequence: {sequence_tensor}")
-#print(f"Original sequence: {original_sequence}")
+sequence_tensor, original_sequence, encoded_label, original_label, full_label, taxonomy_of_encoded_label = \
+     load_sequence_and_labels(1022, './datasets_bacillus/train')
+
+print(f"Encoded sequence: {sequence_tensor}")
+print(f"Original sequence: {original_sequence}")
 print(f"Encoded label: {encoded_label}")
 print(f"Original label: {original_label}")
 print(f"Full taxonomy: {full_label}")

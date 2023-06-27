@@ -1,0 +1,9 @@
+Taxonomy,Encoded Taxonomy,Train,Validation,Test
+Bacillus amyloliquefaciens,0,99,22,21
+Bacillus anthracis,1,263,57,56
+Bacillus cereus,2,304,65,65
+Bacillus cytotoxicus,3,90,19,20
+Bacillus licheniformis,4,80,17,17
+Bacillus subtilis,5,448,96,96
+Bacillus thuringiensis,6,188,40,40
+Bacillus velezensis,7,366,78,79
