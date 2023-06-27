@@ -27,10 +27,6 @@ class ConvClassifier(nn.Module):
             nn.ReLU(inplace=True),
             nn.Linear(600, 281), # Match output size of previous layer
             nn.ReLU(inplace=True),
-            # nn.Linear(1686, 562),
-            # nn.ReLU(inplace=True),
-            # nn.Linear(562, 281),
-            #nn.ReLU(inplace=True),
             nn.Linear(281, num_classes)
 )
         # Initialize weights with He initialization

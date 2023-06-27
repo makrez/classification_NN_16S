@@ -30,6 +30,7 @@ def plot_confusion_matrix(y_true, y_pred, labels_map, subdirectory):
  
     # Save the figure
     plt.savefig(os.path.join(subdirectory, 'confusion_matrix.png'), dpi=300, bbox_inches='tight')
+    plt.close()
 
 
 
@@ -58,6 +59,7 @@ def plot_train_test_curves(train_losses, test_losses, subdirectory):
     
     # Save the figure
     plt.savefig(os.path.join(subdirectory, 'train_test_curves.png'), dpi=300, bbox_inches='tight')
+    plt.close()
 
 
 
