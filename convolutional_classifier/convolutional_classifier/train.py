@@ -6,19 +6,20 @@ from sklearn.model_selection import ParameterGrid
 import numpy as np
 import logging
 import json
-from models import ConvClassifier
+from models import ConvClassifier, ConvClassifier2, ConvClassifierBacillus
 from training_functions import train_network
 import pickle
 import sys
 import torch.nn.functional as F
 from model_summarise_functions import plot_confusion_matrix, plot_train_test_curves, print_f1_and_classification_report
 import yaml
-
+from dataset_classes import hot_dna
+#from test_load_tensor import load_sequence_and_labels
 torch.cuda.empty_cache()
 
-data_folder="/scratch/mk_cas"
+data_folder="/data/users/mkreuzer/classification_NN_16S/convolutional_classifier/data_engineering/datasets_bacillus"
 
-alignment_length = 50000
+alignment_length = 4559
 batch_size = 32
 
 class SequenceDataset(Dataset):
@@ -40,17 +41,21 @@ class SequenceDataset(Dataset):
 
 
 # Specify your training and testing tensor paths and labels here
-num_train_samples = len(os.listdir(os.path.join(data_folder, 'datasets/train')))
-num_test_samples = len(os.listdir(os.path.join(data_folder, 'datasets/test')))
+num_train_samples = len(os.listdir(os.path.join(data_folder, 'train')))
+num_test_samples = len(os.listdir(os.path.join(data_folder, 'test')))
 
-X_train_paths = [os.path.join(os.path.join(data_folder, 'datasets/train'), f) for f in os.listdir(os.path.join(data_folder, 'datasets/train/')) if f.endswith("pt")]
+X_train_paths = [os.path.join(os.path.join(data_folder, 'train'), f) for f in os.listdir(os.path.join(data_folder, 'train/')) if f.endswith("pt")]
 X_train_paths.sort(key=lambda x: int(os.path.splitext(os.path.basename(x))[0]))  # Sort file paths based on filename (original index)
-with open(os.path.join(data_folder, 'datasets/train/labels.pkl'), 'rb') as f:
+with open(os.path.join(data_folder, 'train/labels.pkl'), 'rb') as f:
     y_train = pickle.load(f)
 
-X_test_paths = [os.path.join(os.path.join(data_folder, 'datasets/test'), f) for f in os.listdir(os.path.join(data_folder, 'datasets/test/')) if f.endswith("pt")]
+print(X_train_paths[1:5])
+print(y_train)
+
+
+X_test_paths = [os.path.join(os.path.join(data_folder, 'test'), f) for f in os.listdir(os.path.join(data_folder, 'test/')) if f.endswith("pt")]
 X_test_paths.sort(key=lambda x: int(os.path.splitext(os.path.basename(x))[0]))  # Sort file paths based on filename (original index)
-with open(os.path.join(data_folder, 'datasets/test/labels.pkl'), 'rb') as f:
+with open(os.path.join(data_folder, 'test/labels.pkl'), 'rb') as f:
     y_test = pickle.load(f)
 
 # Create separate datasets and dataloaders for training and test sets
@@ -64,7 +69,7 @@ device = torch.device("cuda" if torch.cuda.is_available() else "cpu")
 torch.cuda.empty_cache()
 num_classes = len(np.unique([item[1] for item in y_train]))
 
-model = ConvClassifier(input_length=alignment_length, num_classes=num_classes)
+model = ConvClassifierBacillus(input_length=alignment_length, num_classes=num_classes)
 
 if torch.cuda.device_count() > 1:
     print("Let's use", torch.cuda.device_count(), "GPUs!")
@@ -124,7 +129,7 @@ for params in grid:
     logger.addHandler(handler)
     logger.addHandler(console_handler)
     # Reset the model and optimizer
-    model = ConvClassifier(alignment_length, num_classes)
+    model = ConvClassifierBacillus(alignment_length, num_classes)
     model.to(device)
     optimizer = torch.optim.Adam(model.parameters(), lr=params['lr'])
 
