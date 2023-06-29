@@ -12,7 +12,7 @@ from torch.utils.data import Dataset
 import numpy as np
 import os
 
-def train_network(n_epochs, model, optimizer, criterion, train_dataloader, test_dataloader, device, params_save_path, logger):
+def train_network(n_epochs, model, optimizer, criterion, train_dataloader, valid_dataloader, device, params_save_path, logger):
 
     # Save all parameters
     params = {
@@ -20,12 +20,12 @@ def train_network(n_epochs, model, optimizer, criterion, train_dataloader, test_
         "optimizer": str(optimizer),
         "criterion": str(criterion),
         "train_dataloader_length": len(train_dataloader.dataset),
-        "test_dataloader_length": len(test_dataloader.dataset),
+        "valid_dataloader_length": len(valid_dataloader.dataset),
         "device": str(device),
     }
 
     train_losses = []
-    test_losses = []
+    valid_losses = []
     start_time = time.time()
 
     for epoch in range(1, n_epochs+1):
@@ -56,13 +56,13 @@ def train_network(n_epochs, model, optimizer, criterion, train_dataloader, test_
         train_loss /= len(train_dataloader.dataset)
         train_losses.append(train_loss)
 
-        # Test phase
-        test_loss = 0.0
+        # valid phase
+        valid_loss = 0.0
         y_true = []
         y_pred = []
         model.eval()
         with torch.no_grad():
-            for i, batch in enumerate(test_dataloader, 1):
+            for i, batch in enumerate(valid_dataloader, 1):
                 sequence_data = batch["sequence"].permute(0, 2, 1).to(device)
                 labels = batch["label"].to(device)
             
@@ -73,10 +73,10 @@ def train_network(n_epochs, model, optimizer, criterion, train_dataloader, test_
                 y_true.extend(labels.tolist())
 
                 loss = criterion(outputs, labels)
-                test_loss += loss.item() * sequence_data.size(0)
+                valid_loss += loss.item() * sequence_data.size(0)
 
-        test_loss /= len(test_dataloader.dataset)
-        test_losses.append(test_loss)
+        valid_loss /= len(valid_dataloader.dataset)
+        valid_losses.append(valid_loss)
 
         correct_preds = torch.eq(torch.max(F.softmax(outputs, dim=-1), dim=-1)[1], labels).float().sum()
         params['correct_preds'] = correct_preds.item()
@@ -95,7 +95,7 @@ def train_network(n_epochs, model, optimizer, criterion, train_dataloader, test_
         epoch_duration = epoch_end_time - epoch_start_time
         total_duration = epoch_end_time - start_time
 
-        logger.info(f"Epoch: {epoch} \tTraining Loss: {train_loss:.6f} \tTest Loss: {test_loss:.6f} \tEpoch Time: {epoch_duration:.2f}s \tTotal Time: {total_duration:.2f}s")
+        logger.info(f"Epoch: {epoch} \tTraining Loss: {train_loss:.6f} \tvalid Loss: {valid_loss:.6f} \tEpoch Time: {epoch_duration:.2f}s \tTotal Time: {total_duration:.2f}s")
 
     # Save the final model
     torch.save(model.state_dict(), f"{params_save_path}/final_model.pt")
@@ -103,7 +103,7 @@ def train_network(n_epochs, model, optimizer, criterion, train_dataloader, test_
     total_duration = time.time() - start_time
     logger.info(f"Total training time: {total_duration:.2f}s")
 
-    return train_losses, test_losses, y_true, y_pred
+    return train_losses, valid_losses, y_true, y_pred
 
 # Define the function for taxonomy filtering
 def filter_by_taxonomy(full_labels, taxonomic_level, taxonomic_group, 

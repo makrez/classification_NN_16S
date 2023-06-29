@@ -51,17 +51,17 @@ def print_f1_and_classification_report(y_true, y_pred, labels_map, subdirectory)
 
     return classification_rep, f1_score_result
 
-def plot_train_test_curves(train_losses, test_losses, subdirectory):
+def plot_train_test_curves(train_losses, valid_losses, subdirectory):
     epochs = range(1, len(train_losses) + 1)
     plt.plot(epochs, train_losses, 'g', label='Training loss')
-    plt.plot(epochs, test_losses, 'b', label='Test loss')
-    plt.title('Training and Test loss')
+    plt.plot(epochs, valid_losses, 'b', label='Validation loss')
+    plt.title('Training and Validation loss')
     plt.xlabel('Epochs')
     plt.ylabel('Loss')
     plt.legend()
     
     # Save the figure
-    plt.savefig(os.path.join(subdirectory, 'train_test_curves.png'), dpi=300, bbox_inches='tight')
+    plt.savefig(os.path.join(subdirectory, 'train_validation_curves.png'), dpi=300, bbox_inches='tight')
     plt.close()
 
 
