@@ -3,9 +3,9 @@ import fire
 from process_data_functions import load_sequences, process_sequences
 
 
-def main(msa_file_path='../../data/Actinobacteria_10000_seqs.fasta', 
-         alignment_length=50000, 
-         dataset_dir='/scratch/mk_cas/datasets2'):
+def main(msa_file_path='/scratch/mk_cas/bacteria_SILVA_138.1_SSURef_tax_silva_full_align_trunc.fasta', 
+         alignment_length=50000,
+         dataset_dir='/scratch/mk_cas/full_silva_dataset'):
     
     """
     This script pre-processes sequence data and saves it for later usage.

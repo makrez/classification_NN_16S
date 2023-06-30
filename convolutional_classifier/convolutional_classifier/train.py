@@ -9,23 +9,49 @@ import json
 import pickle
 import sys
 import yaml
-from models import ConvClassifier, ConvClassifier2
-from training_functions import train_network, filter_by_taxonomy, encode_labels, split_data, SequenceDataset, write_counts_to_csv
-from model_evaluation_functions import plot_confusion_matrix, plot_train_test_curves, print_f1_and_classification_report
+from models import *
+from training_functions import train_network 
+from data_processing_functions import filter_by_taxonomy, encode_labels, \
+    split_data, SequenceDataset, write_counts_to_csv, \
+    plot_classification_histogram
+from model_evaluation_functions import plot_confusion_matrix, \
+    plot_train_test_curves, print_f1_and_classification_report
 
-data_folder="/scratch/mk_cas/datasets2/sequences"
-batch_size = 32
-alignment_length = 50000
-taxonomic_level="Phylum"
-taxonomic_group="Actinobacteria"
-classification_level="Genus"
-minimum_samples=100
 # Load the configuration file
 with open('config.yaml', 'r') as f:
     config = yaml.safe_load(f)
 
+# Get the data and taxonomy parameters from the config file
+data_folder=config['data_folder'] 
+alignment_length = config['alignment_length'] 
+taxonomic_level= config['taxonomic_level']
+taxonomic_group=config['taxonomic_group']
+classification_level=config['classification_level']
+minimum_samples=config['minimum_samples_per_group']
+fraction_of_sequences_to_use=config['fraction_of_sequences_to_use']
+
+# Get the hyperparameters from the config file
+lr_list = config['lr']
+n_epoch_list = config['n_epoch']
+batch_size_list = config['batch_size']
+model_list = config['model']
+
+# Define the hyperparameters
+param_grid = {
+    'lr': lr_list,
+    'n_epoch': n_epoch_list,
+    'batch_size': batch_size_list,
+    'model': model_list
+}
+
+grid = ParameterGrid(param_grid)
+
+device = torch.device("cuda" if torch.cuda.is_available() else "cpu")
+
+# Prepare the data
+#-------------------------------------------------------------------------------
 # Load full labels
-with open(os.path.join(data_folder, 'full_labels.pkl'), 'rb') as f:
+with open(os.path.join(data_folder, 'full_labels_conform.pkl'), 'rb') as f:
     full_labels = pickle.load(f)
 
 filtered_labels, labels_counter, classification_counts, num_classes = filter_by_taxonomy(
@@ -33,7 +59,8 @@ filtered_labels, labels_counter, classification_counts, num_classes = filter_by_
     taxonomic_level=taxonomic_level,
     taxonomic_group=taxonomic_group, 
     classification_level=classification_level, 
-    minimum_samples=minimum_samples
+    minimum_samples=minimum_samples,
+    fraction=fraction_of_sequences_to_use
     )
 
 # Extracting labels from the filtered_labels
@@ -46,52 +73,22 @@ train_dataset = SequenceDataset(data_folder, train_indices)
 valid_dataset = SequenceDataset(data_folder, valid_indices)
 test_dataset = SequenceDataset(data_folder, test_indices)
 
-# Create dataloaders
-train_dataloader = DataLoader(train_dataset, batch_size=batch_size, shuffle=True)
-valid_dataloader = DataLoader(valid_dataset, batch_size=batch_size, shuffle=False)
-test_dataloader = DataLoader(test_dataset, batch_size=batch_size, shuffle=False)
-
-device = torch.device("cuda" if torch.cuda.is_available() else "cpu")
-torch.cuda.empty_cache()
-
-model = ConvClassifier2(input_length=alignment_length, num_classes=num_classes)
-
-if torch.cuda.device_count() > 1:
-    print("Let's use", torch.cuda.device_count(), "GPUs!")
-    model = nn.DataParallel(model)
-
-model.to(device)
-
 criterion = nn.CrossEntropyLoss()
 
-# Get the hyperparameters from the config file
-lr_list = config['lr']
-n_epoch_list = config['n_epoch']
-
-# Define the hyperparameters
-param_grid = {
-    'lr': lr_list,
-    'n_epoch': n_epoch_list
-}
-
-grid = ParameterGrid(param_grid)
-
-# To store results
 results = []
 
 for params in grid:
     
     # Create a subdirectory for this set of parameters
-    directory = f"results/{taxonomic_group}_{classification_level}_minsize_{minimum_samples}_lr_{params['lr']}_ne_{params['n_epoch']}"
+    directory = f"results/{taxonomic_group}_{classification_level}_min_{minimum_samples}_{params['model']}_bs_{params['batch_size']}_lr_{params['lr']}_ne_{params['n_epoch']}"
 
     # Check if the directory already exists
-    if os.path.exists(directory):
-        print(f"Directory {directory} already exists. Skipping training...")
+    if os.path.isfile(os.path.join(directory, 'training_finished.txt')):
         continue
 
     os.makedirs(directory, exist_ok=True)
 
-        # Set up a logger
+    # Set up a logger
     logger = logging.getLogger()
     logger.setLevel(logging.INFO)
 
@@ -112,21 +109,43 @@ for params in grid:
     logger.addHandler(handler)
     logger.addHandler(console_handler)
 
-
     # Write classification counts
     pickle.dump(classification_counts, open(f'{directory}/classification_counts.pkl', 'wb'))
     write_counts_to_csv(classification_counts, f'{directory}/classification_counts.csv')
+    plot_classification_histogram(classification_counts,
+                                os.path.join(directory, 
+                                            'classes_histogram.png'))
 
     # save the label_map
     pickle.dump(label_map, open(f'{data_folder}/label_map.pkl', 'wb'))
+
+    #save test,train and valid indices
+    pickle.dump(train_indices, open(f'{data_folder}/train_indices.pkl', 'wb'))
+    pickle.dump(valid_indices, open(f'{data_folder}/valid_indices.pkl', 'wb'))
+    pickle.dump(test_indices, open(f'{data_folder}/test_indices.pkl', 'wb'))
     
     # Create a subdirectory for model evaluation
     model_evaluation_dir = os.path.join(directory, 'model_evaluation')
     os.makedirs(model_evaluation_dir, exist_ok=True)
     
+    batch_size = params['batch_size']
+    model_name = params['model']
+    print(model_name)
 
-    # Reset the model and optimizer
-    model = ConvClassifier2(alignment_length, num_classes)
+    # Create dataloaders
+    train_dataloader = DataLoader(train_dataset, batch_size=batch_size, shuffle=True)
+    valid_dataloader = DataLoader(valid_dataset, batch_size=batch_size, shuffle=False)
+    test_dataloader = DataLoader(test_dataset, batch_size=batch_size, shuffle=False)
+    
+    model_class = globals().get(model_name)
+    if model_class is None:
+        raise ValueError(f"Invalid model name: {model_name}")
+    model = model_class(input_length=alignment_length, num_classes=num_classes)
+
+    if torch.cuda.device_count() > 1:
+        print("Let's use", torch.cuda.device_count(), "GPUs!")
+        model = nn.DataParallel(model)
+
     model.to(device)
     optimizer = torch.optim.Adam(model.parameters(), lr=params['lr'])
 
@@ -163,3 +182,5 @@ for params in grid:
     plot_confusion_matrix(y_true, y_pred, label_map, model_evaluation_dir)
     plot_train_test_curves(train_losses, valid_losses, model_evaluation_dir)
     print_f1_and_classification_report(y_true, y_pred, label_map, model_evaluation_dir)
+    with open(os.path.join(directory, 'training_finished.txt'), 'w'):
+        pass

@@ -1,2 +1,17 @@
-lr: [0.0001]
-n_epoch: [5]
+# Data parameters
+data_folder: "/scratch/mk_cas/full_silva_dataset/sequences/"
+alignment_length: 50000
+
+# Taxonomy parameters
+taxonomic_level: "Phylum"
+taxonomic_group: "Actinobacteria"
+classification_level: "Genus"
+minimum_samples_per_group: 20
+fraction_of_sequences_to_use: 0.2
+
+# Hyperparameters
+lr: [0.001, 0.0001, 0.00001]
+n_epoch: [50]
+batch_size: [128, 64, 32]
+model: [ConvClassifier2, SmallModel, ModelWithDropout, LargerModel]
+#model: [SmallModel]
