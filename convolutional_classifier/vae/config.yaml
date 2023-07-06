@@ -1,0 +1,17 @@
+# Data parameters
+data_folder: "/scratch/mk_cas/full_silva_dataset/sequences/"
+alignment_length: 50000
+
+# Taxonomy parameters
+taxonomic_level: "Domain"
+taxonomic_group: "Bacteria"
+classification_level: "Species"
+minimum_samples_per_group: 10
+fraction_of_sequences_to_use: 0.01
+
+# Hyperparameters
+lr: [0.0001, 0.001]
+n_epoch: [50]
+batch_size: [64]
+#model: [ConvClassifier2, SmallModel, ModelWithDropout, LargerModel]
+model: [ConvVAE]
